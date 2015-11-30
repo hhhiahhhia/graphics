@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <gl/glut.h>
+#include "gluthead.h"
+
 
 #define defineCheckerImageWidth 64
 #define defineCheckerImageHeight 64
@@ -198,17 +199,17 @@ void getFPS()
 
   if (bDisplayList)
   {
-	strcpy_s(cMode,"display list");
+	strcpy(cMode,"display list");
   }
   else
   {
-	strcpy_s(cMode,"naive");
+	strcpy(cMode,"naive");
   }
   iFrame++;
   iTime=glutGet(GLUT_ELAPSED_TIME);
   if ((iTime-iTimebase)>1000)
   {
-	sprintf_s(cBuffer,"FPS:%5.2f %s",iFrame*1000.0/(iTime-iTimebase),cMode);
+	sprintf(cBuffer,"FPS:%5.2f %s",iFrame*1000.0/(iTime-iTimebase),cMode);
 	iTimebase=iTime;
 	iFrame=0;
   }
