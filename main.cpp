@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <vector>
 #include "gluthead.h"
-
+#include "object.hpp"
 
 #define defineCheckerImageWidth 64
 #define defineCheckerImageHeight 64
@@ -24,6 +25,8 @@ bool bPersp=true;
 bool bWire=false;
 bool bAnim=false;
 bool bDisplayList=true;
+
+std::vector<Object*> objectList;//main list
 
 void makeCheckerImageFunction()
 {
@@ -499,41 +502,65 @@ void drawModelFunction()
   // drawExampleFunction();
   glPopMatrix();
 }
-
+void drawObject(Object* obj)
+{
+    glPushMatrix();
+    glColor3f(0.7, 0.7, 0.7);
+    glTranslatef(obj->location.x, obj->location.y, obj->location.z);
+    glRotatef(obj->rotate.x, 1, 0, 0);
+    glRotatef(obj->rotate.y, 0, 1, 0);
+    glRotatef(obj->rotate.z, 0, 0, 1);
+    glScalef(obj->size.x, obj->size.y, obj->size.z);
+    obj->draw();
+    obj->script();
+    for (int i = 0;i<obj->children.size();i++)
+    {
+        drawObject(obj->children[i]);
+    }
+    glPopMatrix();
+}
 void glutDisplayFunction()
 {
-  glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-  glMatrixMode(GL_MODELVIEW); // select model-view matrix
-  glLoadIdentity(); // set model-view matrix
-  gluLookAt(fCamera[0],fCamera[1],fCamera[2],fCenter[0],fCenter[1],fCenter[2],0.0,1.0,0.0);
-  if (bWire)
-  {
-	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-  }
-  else
-  {
-	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-  }
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW); // select model-view matrix
+    glLoadIdentity(); // set model-view matrix
+    gluLookAt(fCamera[0],fCamera[1],fCamera[2],fCenter[0],fCenter[1],fCenter[2],0.0,1.0,0.0);
+    if (bWire)
+    {
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+    }
+    else
+    {
+    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+    }
+    for (int i = 0; i<objectList.size(); i++)
+    {
+        if (objectList[i]->parent == nullptr)
+        {
+            drawObject(objectList[i]);
+        }
+        
+    }
+    drawModelFunction();
 
-  drawModelFunction();
+    // getFPS();
 
-  // getFPS();
-
-  glutSwapBuffers();
+    glutSwapBuffers();
 }
 
 int main(int argc,char *argv[])
 {
-  glutInit(&argc,argv); // initialize glut
-  glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH); // set display mode
-  glutInitWindowPosition(50,50); // set top-left display window position
-  glutInitWindowSize(1200,700); // set display window width and height
-  iWindowHandle=glutCreateWindow("Room Escape"); // create display window
-  initFunction();
-  glutDisplayFunc(glutDisplayFunction); // send graphics to display window
-  glutReshapeFunc(glutReshapeFunction);
-  glutKeyboardFunc(glutKeyboardFunction);
-  glutIdleFunc(glutIdleFunction);
-  glutMainLoop(); // display everything and wait
-  return 0;
+    glutInit(&argc,argv); // initialize glut
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH); // set display mode
+    glutInitWindowPosition(50,50); // set top-left display window position
+    glutInitWindowSize(1200,700); // set display window width and height
+    iWindowHandle=glutCreateWindow("Room Escape"); // create display window
+    initFunction();
+    glutDisplayFunc(glutDisplayFunction); // send graphics to display window
+    glutReshapeFunc(glutReshapeFunction);
+    glutKeyboardFunc(glutKeyboardFunction);
+    glutIdleFunc(glutIdleFunction);
+    addObject(&objectList);
+    glutMainLoop(); // display everything and wait
+    return 0;
 }
