@@ -24,6 +24,7 @@ public:
     Vector3 location;
     Vector3 rotate;
     Vector3 size;
+    Vector3 color;
     bool visible;
     Object* parent = nullptr;
     std::vector<Object*> children;
@@ -37,9 +38,8 @@ public:
     }
     Object()
     {
-        size.x = 1;
-        size.y = 1;
-        size.z = 1;
+        size = Vector3(1,1,1);
+        color = Vector3(0.7,0.7,0.7);
     }
 };
 void addObject(std::vector<Object*>*);
