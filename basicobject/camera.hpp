@@ -10,7 +10,7 @@
 #define camera_hpp
 
 #include <stdio.h>
-#include "object.hpp"
+#include "../object.hpp"
 class Camera : public Object
 {
 public:
