@@ -6,12 +6,12 @@
 //  Copyright © 2015 zyhc. All rights reserved.
 //
 
-#ifndef name2_hpp
-#define name2_hpp
+#ifndef fyx_hpp
+#define fyx_hpp
 
 #include <stdio.h>
 #include <vector>
 #include "../../object.hpp"
-void name2Part(std::vector<Object*>* objectList);
+void fyxPart(std::vector<Object*>* objectList);
 
 #endif /* name2_hpp */

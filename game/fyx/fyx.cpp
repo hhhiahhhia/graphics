@@ -6,8 +6,8 @@
 //  Copyright © 2015 zyhc. All rights reserved.
 //
 
-#include "name2.hpp"
-void name2Part(std::vector<Object*>* objectList)
+#include "fyx.hpp"
+void fyxPart(std::vector<Object*>* objectList)
 {
     
 }

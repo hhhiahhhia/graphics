@@ -9,6 +9,7 @@
 #include "zyh.hpp"
 #include "../../basicobject/triangle.hpp"
 #include "rotatingtriangle.hpp"
+#include "player.hpp"
 void zyhPart(std::vector<Object*>* objectList)
 {
     Triangle *t1 = new Triangle;
@@ -30,5 +31,11 @@ void zyhPart(std::vector<Object*>* objectList)
     RotatingTriangle* rt1 = new RotatingTriangle;
     rt1->location = Vector3(70,10,-50);
     objectList->push_back(rt1);
+    
+    Player *player = new Player;
+    player->camera = dynamic_cast<Camera*>((*objectList)[0]);
+    objectList->push_back(player);
+    
+    
     
 }

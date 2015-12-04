@@ -10,13 +10,29 @@
 #include "lyt.hpp"
 #include "zyh.hpp"
 #include "lty.hpp"
-#include "name1.hpp"
-#include "name2.hpp"
+#include "xft.hpp"
+#include "fyx.hpp"
+bool Object::keyDown[256];
+double Object::keyLoc[256][2];
+void Object::upKey(unsigned char key,int x,int y)
+{
+    keyDown[key] = false;
+}
+void Object::downKey(unsigned char key,int x,int y)
+{
+    keyDown[key] = true;
+    keyLoc[key][0] = x;
+    keyLoc[key][1] = y;
+}
+bool Object::keyPushed(unsigned char key)
+{
+    return keyDown[key];
+}
 void addObject(std::vector<Object*>* objectList)
 {
     ltyPart(objectList);
     zyhPart(objectList);
     lytPart(objectList);
-    name1Part(objectList);
-    name2Part(objectList);
+    xftPart(objectList);
+    fyxPart(objectList);
 }

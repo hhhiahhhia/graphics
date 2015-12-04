@@ -25,6 +25,7 @@ public:
     Vector3 rotate;
     Vector3 size;
     Vector3 color;
+    bool isCamera;
     bool visible;
     Object* parent = nullptr;
     std::vector<Object*> children;
@@ -38,9 +39,15 @@ public:
     }
     Object()
     {
+        visible = true;
         size = Vector3(1,1,1);
         color = Vector3(0.7,0.7,0.7);
     }
+    static bool keyDown[256];
+    static double keyLoc[256][2];
+    static void upKey(unsigned char key,int x,int y);
+    static void downKey(unsigned char key,int x,int y);
+    static bool keyPushed(unsigned char key);
 };
 void addObject(std::vector<Object*>*);
 #endif /* object_hpp */

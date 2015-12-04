@@ -6,12 +6,12 @@
 //  Copyright © 2015 zyhc. All rights reserved.
 //
 
-#ifndef name1_hpp
-#define name1_hpp
+#ifndef xft_hpp
+#define xft_hpp
 
 #include <stdio.h>
 #include <vector>
 #include "../../object.hpp"
-void name1Part(std::vector<Object*>* objectList);
+void xftPart(std::vector<Object*>* objectList);
 
 #endif /* name1_hpp */

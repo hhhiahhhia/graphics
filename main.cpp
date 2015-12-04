@@ -5,6 +5,7 @@
 #include <vector>
 #include "gluthead.h"
 #include "object.hpp"
+#include "camera.hpp"
 
 #define defineCheckerImageWidth 64
 #define defineCheckerImageHeight 64
@@ -16,8 +17,6 @@ GLubyte byteCheckerImage[defineCheckerImageHeight][defineCheckerImageWidth][4];
 GLuint iTextureName=0;
 
 float fDistance=1.0;
-float fCamera[]={50.0,10.0,-1.0};
-float fCenter[]={50.0,10.0,-10.0};
 GLfloat fTriangleRotation=0.0;
 GLfloat fQuadrangleRotation=0.0;
 
@@ -27,6 +26,7 @@ bool bAnim=false;
 bool bDisplayList=true;
 
 std::vector<Object*> objectList;//main list
+Camera mainCamera;
 
 void makeCheckerImageFunction()
 {
@@ -101,6 +101,7 @@ void glutReshapeFunction(GLsizei width,GLsizei height)
 
 void glutKeyboardFunction(unsigned char k,int x,int y)
 {
+    Object::downKey(k, x, y);
     switch(k)
     {
         case 27:{}
@@ -125,60 +126,6 @@ void glutKeyboardFunction(unsigned char k,int x,int y)
             bAnim=!bAnim;
             break;
         }
-        case 'a':
-        {
-            if ((fCamera[0]-fDistance)>1.0)
-            {
-                fCamera[0]-=fDistance;
-                fCenter[0]-=fDistance;
-            }
-            break;
-        }
-        case 'd':
-        {
-            if ((fCamera[0]+fDistance)<99.0)
-            {
-                fCamera[0]+=fDistance;
-                fCenter[0]+=fDistance;
-            }
-            break;
-        }
-        case 'w':
-        {
-            if ((fCamera[2]-fDistance)>-99.0)
-            {
-                fCamera[2]-=fDistance;
-                fCenter[2]-=fDistance;
-            }
-            break;
-        }
-        case 's':
-        {
-            if ((fCamera[2]+fDistance)<-1.0)
-            {
-                fCamera[2]+=fDistance;
-                fCenter[2]+=fDistance;
-            }
-            break;
-        }
-        case 'z':
-        {
-            if ((fCamera[1]+fDistance)<99.0)
-            {
-                fCamera[1]+=fDistance;
-                fCenter[1]+=fDistance;
-            }
-            break;
-        }
-        case 'c':
-        {
-            if ((fCamera[1]-fDistance)>1.0)
-            {
-                fCamera[1]-=fDistance;
-                fCenter[1]-=fDistance;
-            }
-            break;
-        }
         case 'l':
         {
             bDisplayList=!bDisplayList;
@@ -200,7 +147,10 @@ void drawObject(Object* obj)
     glRotatef(obj->rotate.y, 0, 1, 0);
     glRotatef(obj->rotate.z, 0, 0, 1);
     glScalef(obj->size.x, obj->size.y, obj->size.z);
-    obj->draw();
+    if (obj->visible)
+    {
+        obj->draw();
+    }
     obj->script();
     for (int i = 0;i<obj->children.size();i++)
     {
@@ -213,7 +163,8 @@ void glutDisplayFunction()
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW); // select model-view matrix
     glLoadIdentity(); // set model-view matrix
-    gluLookAt(fCamera[0],fCamera[1],fCamera[2],fCenter[0],fCenter[1],fCenter[2],0.0,1.0,0.0);
+    
+    gluLookAt(mainCamera.location.x,mainCamera.location.y,mainCamera.location.z,mainCamera.center.x,mainCamera.center.y,mainCamera.center.z,0.0,1.0,0.0);
     if (bWire)
     {
         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
@@ -236,7 +187,10 @@ void glutDisplayFunction()
     
     glutSwapBuffers();
 }
-
+void glutKeyboardReleaseFunction(unsigned char k,int x,int y)
+{
+    Object::upKey(k,x,y);
+}
 int main(int argc,char *argv[])
 {
     glutInit(&argc,argv); // initialize glut
@@ -249,6 +203,8 @@ int main(int argc,char *argv[])
     glutReshapeFunc(glutReshapeFunction);
     glutKeyboardFunc(glutKeyboardFunction);
     glutIdleFunc(glutIdleFunction);
+    glutKeyboardUpFunc(glutKeyboardReleaseFunction);
+    objectList.push_back(&mainCamera);
     addObject(&objectList);
     glutMainLoop(); // display everything and wait
     return 0;

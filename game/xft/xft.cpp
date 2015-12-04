@@ -6,8 +6,8 @@
 //  Copyright © 2015 zyhc. All rights reserved.
 //
 
-#include "name1.hpp"
-void name1Part(std::vector<Object*>* objectList)
+#include "xft.hpp"
+void xftPart(std::vector<Object*>* objectList)
 {
     
 }
