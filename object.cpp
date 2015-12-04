@@ -7,11 +7,11 @@
 //
 
 #include "object.hpp"
-#include "lyt.hpp"
-#include "zyh.hpp"
-#include "lty.hpp"
-#include "xft.hpp"
-#include "fyx.hpp"
+#include "game/lyt/lyt.hpp"
+#include "game/zyh/zyh.hpp"
+#include "game/lty/lty.hpp"
+#include "game/xft/xft.hpp"
+#include "game/fyx/fyx.hpp"
 bool Object::keyDown[256];
 double Object::keyLoc[256][2];
 void Object::upKey(unsigned char key,int x,int y)

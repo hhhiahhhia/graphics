@@ -27,7 +27,7 @@ public:
     Vector3 color;
     bool isCamera;
     bool visible;
-    Object* parent = nullptr;
+    Object* parent;
     std::vector<Object*> children;
     virtual void script(){}
     virtual void draw(){}
@@ -42,6 +42,7 @@ public:
         visible = true;
         size = Vector3(1,1,1);
         color = Vector3(0.7,0.7,0.7);
+        parent = nullptr;
     }
     static bool keyDown[256];
     static double keyLoc[256][2];

@@ -5,7 +5,7 @@
 #include <vector>
 #include "gluthead.h"
 #include "object.hpp"
-#include "camera.hpp"
+#include "basicobject/camera.hpp"
 
 #define defineCheckerImageWidth 64
 #define defineCheckerImageHeight 64
@@ -152,7 +152,7 @@ void drawObject(Object* obj)
         obj->draw();
     }
     obj->script();
-    for (int i = 0;i<obj->children.size();i++)
+    for (int i = 0;i<int(obj->children.size());i++)
     {
         drawObject(obj->children[i]);
     }
@@ -173,7 +173,7 @@ void glutDisplayFunction()
     {
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     }
-    for (int i = 0; i<objectList.size(); i++)
+    for (int i = 0; i<int(objectList.size()); i++)
     {
         if (objectList[i]->parent == nullptr)
         {

@@ -1,4 +1,4 @@
-//#include <fstream>
-//int main{
-//	filestream	
-//}
+#include <fstream>
+int main{
+	filestream	
+}
