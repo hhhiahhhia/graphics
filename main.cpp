@@ -191,6 +191,40 @@ void glutKeyboardReleaseFunction(unsigned char k,int x,int y)
 {
     Object::upKey(k,x,y);
 }
+void glutMousefunction(int button, int state,
+                       int x, int y)
+{
+    switch (button)
+    {
+        case GLUT_LEFT_BUTTON:
+        {
+            if (state == GLUT_DOWN)
+            {
+                Object::mouseClicked = true;
+            }
+            else
+            {
+                Object::mouseClicked = false;
+            }
+        }
+        case GLUT_RIGHT_BUTTON:
+        {
+            if (state == GLUT_DOWN)
+            {
+                Object::mouseClickedRight = true;
+            }
+            else
+            {
+                Object::mouseClickedRight = false;
+            }
+        }
+    }
+}
+void glutMouseMove(int x, int y )
+{
+    Object::mouseX = GLfloat( x );
+    Object::mouseY = GLfloat( y );
+}
 int main(int argc,char *argv[])
 {
     glutInit(&argc,argv); // initialize glut
@@ -204,6 +238,9 @@ int main(int argc,char *argv[])
     glutKeyboardFunc(glutKeyboardFunction);
     glutIdleFunc(glutIdleFunction);
     glutKeyboardUpFunc(glutKeyboardReleaseFunction);
+    glutMouseFunc(glutMousefunction);
+    glutPassiveMotionFunc( glutMouseMove );
+    glutMotionFunc( glutMouseMove );
     objectList.push_back(&mainCamera);
     addObject(&objectList);
     glutMainLoop(); // display everything and wait

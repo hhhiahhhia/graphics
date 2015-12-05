@@ -44,8 +44,9 @@ public:
         color = Vector3(0.7,0.7,0.7);
         parent = nullptr;
     }
-    static bool keyDown[256];
+    static bool keyDown[256],mouseClicked,mouseClickedRight;
     static double keyLoc[256][2];
+    static double mouseX,mouseY;
     static void upKey(unsigned char key,int x,int y);
     static void downKey(unsigned char key,int x,int y);
     static bool keyPushed(unsigned char key);
