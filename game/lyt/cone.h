@@ -10,7 +10,7 @@
 #define __graphics__cone__
 
 #include <stdio.h>
-#include "object.hpp"
+#include "../../object.hpp"
 
 class Cone:public Object{
     virtual void script();
