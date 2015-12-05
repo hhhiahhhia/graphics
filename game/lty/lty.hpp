@@ -3,7 +3,7 @@
 //  mygraphics
 //
 //  Created by zyhc on 12/1/15.
-//  Copyright © 2015 zyhc. All rights reserved.
+//  Copyright 漏 2015 zyhc. All rights reserved.
 //
 
 #ifndef lty_hpp
