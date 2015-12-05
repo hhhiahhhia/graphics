@@ -10,7 +10,7 @@
 #define triangle_hpp
 
 #include <stdio.h>
-#include "object.hpp"
+#include "../object.hpp"
 class Triangle : public Object
 {
     virtual void draw();
