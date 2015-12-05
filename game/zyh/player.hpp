@@ -10,7 +10,7 @@
 #define player_hpp
 
 #include <stdio.h>
-#include "camera.hpp"
+#include "../../basicobject/camera.hpp"
 class Player:public Object
 {
 public:
