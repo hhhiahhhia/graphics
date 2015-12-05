@@ -19,7 +19,7 @@ public:
     {
         isCamera = true;
         location = Vector3(50.0,10.0,-1.0);
-        center =Vector3(50.0,10.0,-10.0);
+        center = Vector3(50.0,10.0,-10.0);
     }
 };
 
