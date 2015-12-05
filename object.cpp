@@ -12,8 +12,9 @@
 #include "game/lty/lty.hpp"
 #include "game/xft/xft.hpp"
 #include "game/fyx/fyx.hpp"
-bool Object::keyDown[256];
+bool Object::keyDown[256],Object::mouseClicked,Object::mouseClickedRight;
 double Object::keyLoc[256][2];
+double Object::mouseX,Object::mouseY;
 void Object::upKey(unsigned char key,int x,int y)
 {
     keyDown[key] = false;

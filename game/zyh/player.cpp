@@ -7,39 +7,80 @@
 //
 
 #include "player.hpp"
+#include "math.h"
+#include <iostream>
 
-
+Player::Player()
+{
+    PI = 3.1415926535897;
+    tAngInc = PI / 30;
+    tVerticalAng = 0;
+    tHorizonAng = -PI / 2;
+    tRadius = 400.0;
+}
 void Player::script()
 {
+    if(preMouseX!=-1 && preMouseY!=-1 && mouseX!=-1 && mouseY!=-1) {
+        double tDx = mouseX - preMouseX;
+        double tDy = -mouseY + preMouseY;
+        double tDis = sqrt(tDx*tDx+tDy*tDy);
+        if(tDx > 0.) {
+            tHorizonAng += tAngInc * tDx / tDis;
+            if(tHorizonAng < 0.) { tHorizonAng += 2*PI; }
+            if(tHorizonAng > 2*PI) { tHorizonAng -= 2*PI; }
+        } else if(tDx < 0.) {
+            tHorizonAng += tAngInc * tDx / tDis;
+            if(tHorizonAng < 0.) { tHorizonAng += 2*PI; }
+            if(tHorizonAng > 2*PI) { tHorizonAng -= 2*PI; }
+        }
+//        if (tDx!=0)
+//        tHorizonAng += tAngInc * tDx / tDis;
+//        if (tDy!=0)
+//        tVerticalAng = tVerticalAng - tAngInc * tDy / tDis;
+
+        if(tDy > 0.) {
+            tVerticalAng = tVerticalAng + tAngInc * tDy / tDis;
+            if(tVerticalAng > PI/2) { tVerticalAng = PI/2; }
+        } else if(tDy < 0.) {
+            tVerticalAng = tVerticalAng + tAngInc * tDy / tDis;
+            if(tVerticalAng < -PI/2) { tVerticalAng = -PI/2; }
+        }
+        
+        camera->center.x = camera->location.x + tRadius * cos(tVerticalAng) * cos(tHorizonAng);
+        camera->center.y = camera->location.y + tRadius * sin(tVerticalAng);
+        camera->center.z = camera->location.z + tRadius * cos(tVerticalAng) * sin(tHorizonAng);
+    }
+    std::cout<<tVerticalAng<<","<<tHorizonAng<<std::endl;
+    std::cout<<camera->center.x<<","<<camera->center.y<<","<<camera->center.z<<std::endl;
+    preMouseX = mouseX;
+    preMouseY = mouseY;
     double fDistance = 0.1;
     if (keyPushed('a'))
     {
-        camera->location.x-=fDistance;
-        camera->center.x-=fDistance;
+        camera->location.x+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        camera->center.x+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        camera->location.z-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        camera->center.z-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
     }
     if (keyPushed('d'))
     {
-        camera->location.x+=fDistance;
-        camera->center.x+=fDistance;
+        camera->location.x-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        camera->center.x-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        camera->location.z+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        camera->center.z+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
     }
-	if (keyPushed('w'))
-	{
-        camera->location.z-=fDistance;
-        camera->center.z-=fDistance;
-	}
-	if (keyPushed('s'))
-	{
-        camera->location.z+=fDistance;
-        camera->center.z+=fDistance;
-	}
-	if (keyPushed('z'))
-	{
-        camera->location.y+=fDistance;
-        camera->center.y+=fDistance;
-	}
-	if (keyPushed('c'))
-	{
-        camera->location.y-=fDistance;
-        camera->center.y-=fDistance;
-	}
+    if (keyPushed('w'))
+    {
+        camera->location.z+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        camera->center.z+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        camera->location.x+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        camera->center.x+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+    }
+    if (keyPushed('s'))
+    {
+        camera->location.z-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        camera->center.z-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        camera->location.x-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        camera->center.x-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+    }
 }
