@@ -6,6 +6,7 @@
 
 class drawModel:public Object
 {
+public:
   virtual void draw();
 };
 
