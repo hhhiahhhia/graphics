@@ -3,7 +3,7 @@
 //  mygraphics
 //
 //  Created by zyhc on 12/1/15.
-//  Copyright © 2015 zyhc. All rights reserved.
+//  Copyright 漏 2015 zyhc. All rights reserved.
 //
 
 #ifndef object_hpp
@@ -25,6 +25,10 @@ public:
     Vector3 rotate;
     Vector3 size;
     Vector3 color;
+	bool bLocationFlag;
+	bool bRotateFlag;
+	bool bSizeFlag;
+	bool bColorFlag;
     bool isCamera;
     bool visible;
     Object* parent;
@@ -40,11 +44,15 @@ public:
     Object()
     {
         visible = true;
-        location = Vector3(0.0,0.0,0.0);
-        rotate = Vector3(0.0,0.0,0.0);
+		parent = nullptr;
+		location = Vector3(0.0,0.0,0.0);
+		rotate = Vector3(0.0,0.0,0.0);
         size = Vector3(1.0,1.0,1.0);
-        color = Vector3(0.7,0.7,0.7);
-        parent = nullptr;
+        color = Vector3(0.0,0.0,0.0);
+		bLocationFlag = false;
+		bRotateFlag = false;
+		bSizeFlag = false;
+		bColorFlag = false;
     }
     static bool keyDown[256],mouseClicked,mouseClickedRight;
     static double keyLoc[256][2];
