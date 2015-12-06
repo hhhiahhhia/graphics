@@ -20,7 +20,7 @@ void MyCylinder::script()
 	}
 }
 
-void MyCylinder::draw()
+void MyCylinder::draw() 
 {
     GLUquadricObj *Cylinder1 = gluNewQuadric();
   
