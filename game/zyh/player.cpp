@@ -17,6 +17,8 @@ Player::Player()
     tVerticalAng = 0;
     tHorizonAng = -PI / 2;
     tRadius = 400.0;
+    preMouseX = 0;
+    preMouseY = 0;
 }
 void Player::script()
 {
