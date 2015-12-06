@@ -143,10 +143,10 @@ void drawObject(Object* obj)
     glPushMatrix();
     glColor3f(obj->color.x, obj->color.y, obj->color.z);
     glTranslatef(obj->location.x, obj->location.y, obj->location.z);
+    glScalef(obj->size.x, obj->size.y, obj->size.z);
     glRotatef(obj->rotate.x, 1, 0, 0);
     glRotatef(obj->rotate.y, 0, 1, 0);
     glRotatef(obj->rotate.z, 0, 0, 1);
-    glScalef(obj->size.x, obj->size.y, obj->size.z);
     if (obj->visible)
     {
         obj->draw();
