@@ -229,7 +229,7 @@ int main(int argc,char *argv[])
 {
     glutInit(&argc,argv); // initialize glut
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH); // set display mode
-    glutInitWindowPosition(50,50); // set top-left display window position
+    glutInitWindowPosition(100,100); // set top-left display window position
     glutInitWindowSize(1200,700); // set display window width and height
     iWindowHandle=glutCreateWindow("Room Escape"); // create display window
     initFunction();
