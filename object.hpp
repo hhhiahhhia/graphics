@@ -40,7 +40,9 @@ public:
     Object()
     {
         visible = true;
-        size = Vector3(1,1,1);
+        location = Vector3(0.0,0.0,0.0);
+        rotate = Vector3(0.0,0.0,0.0);
+        size = Vector3(1.0,1.0,1.0);
         color = Vector3(0.7,0.7,0.7);
         parent = nullptr;
     }
