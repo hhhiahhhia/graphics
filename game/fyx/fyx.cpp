@@ -1,13 +1,12 @@
-//
-//  name2.cpp
-//  mygraphics
-//
-//  Created by zyhc on 12/1/15.
-//  Copyright © 2015 zyhc. All rights reserved.
-//
-
 #include "fyx.hpp"
+#include "MyCylinder.h"
+
 void fyxPart(std::vector<Object*>* objectList)
 {
-    
+    MyCylinder * C1 = new MyCylinder(); 
+    C1->location.x = 55;
+    C1->location.y = 3;
+    C1->location.z = -3;
+    C1->rotate.y = 90;
+    objectList->push_back(C1);
 }

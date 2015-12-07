@@ -141,12 +141,24 @@ void glutKeyboardFunction(unsigned char k,int x,int y)
 void drawObject(Object* obj)
 {
     glPushMatrix();
-    glColor3f(obj->color.x, obj->color.y, obj->color.z);
-    glTranslatef(obj->location.x, obj->location.y, obj->location.z);
-    glRotatef(obj->rotate.x, 1, 0, 0);
-    glRotatef(obj->rotate.y, 0, 1, 0);
-    glRotatef(obj->rotate.z, 0, 0, 1);
-    glScalef(obj->size.x, obj->size.y, obj->size.z);
+	if (obj->bColorFlag)
+	{
+		glColor3f(obj->color.x, obj->color.y, obj->color.z);
+	}
+	if (obj->bLocationFlag)
+	{
+		glTranslatef(obj->location.x, obj->location.y, obj->location.z);
+	}
+	if (obj->bRotateFlag)
+	{
+		glRotatef(obj->rotate.x, 1, 0, 0);
+		glRotatef(obj->rotate.y, 0, 1, 0);
+		glRotatef(obj->rotate.z, 0, 0, 1);
+	}
+	if (obj->bSizeFlag)
+	{
+		glScalef(obj->size.x, obj->size.y, obj->size.z);
+	}
     if (obj->visible)
     {
         obj->draw();
@@ -229,7 +241,7 @@ int main(int argc,char *argv[])
 {
     glutInit(&argc,argv); // initialize glut
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH); // set display mode
-    glutInitWindowPosition(50,50); // set top-left display window position
+    glutInitWindowPosition(100,100); // set top-left display window position
     glutInitWindowSize(1200,700); // set display window width and height
     iWindowHandle=glutCreateWindow("Room Escape"); // create display window
     initFunction();

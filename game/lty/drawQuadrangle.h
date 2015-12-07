@@ -1,10 +1,10 @@
-#ifndef drawModel_h
-#define drawModel_h
+#ifndef drawQuadrangle_h
+#define drawQuadrangle_h
 
 #include <stdio.h>
 #include "../../object.hpp"
 
-class drawModel:public Object
+class drawQuadrangle:public Object
 {
 public:
   virtual void draw();
