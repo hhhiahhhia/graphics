@@ -6,17 +6,19 @@ int PI = 3.141592653;
 
 void MyCylinder::script()
 {
-	if(location.z >= -97 && location.z <= -3){
-		if (keyPushed('-'))
-		{		
-			location.z -= 0.1;
-			rotate.x += 6.0 / PI;
-		}
-		if (keyPushed('='))
-		{			
-			location.z += 0.1;
-			rotate.x -= 6.0 / PI;
-		}
+	//bool bSign = true;
+		
+	if (bSign)
+	{
+		location.z -= 0.05;
+		rotate.x -= 1.2 / PI;
+		if(fabs(location.z+97.0) < 1e-6) bSign = !bSign;
+	}
+	else
+	{
+		location.z += 0.05;
+		rotate.x += 1.2 / PI;
+		if (fabs(location.z+3.0) < 1e-6) bSign = !bSign;
 	}
 }
 
@@ -30,7 +32,7 @@ void MyCylinder::draw()
 	glPopMatrix();
 
 	glPushMatrix();
-	glColor3f(0.8, 0.2, 1.0);
+	glColor3f(0.3, 0.2, 1.0);
 	DrawCircleArea(0.0, 0.0, 10.0, 3.0, 32);//top  
     DrawCircleArea(0.0, 0.0, 0.0, 3.0, 32);//base
 	glPopMatrix();
