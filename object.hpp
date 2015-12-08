@@ -25,10 +25,6 @@ public:
     Vector3 rotate;
     Vector3 size;
     Vector3 color;
-	bool bLocationFlag;
-	bool bRotateFlag;
-	bool bSizeFlag;
-	bool bColorFlag;
     bool isCamera;
     bool visible;
     Object* parent;
@@ -48,11 +44,7 @@ public:
 		location = Vector3(0.0,0.0,0.0);
 		rotate = Vector3(0.0,0.0,0.0);
         size = Vector3(1.0,1.0,1.0);
-        color = Vector3(0.0,0.0,0.0);
-		bLocationFlag = false;
-		bRotateFlag = false;
-		bSizeFlag = false;
-		bColorFlag = false;
+        color = Vector3(-1,-1,-1);
     }
     static bool keyDown[256],mouseClicked,mouseClickedRight;
     static double keyLoc[256][2];

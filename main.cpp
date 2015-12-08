@@ -102,6 +102,7 @@ void glutReshapeFunction(GLsizei width,GLsizei height)
 void glutKeyboardFunction(unsigned char k,int x,int y)
 {
     Object::downKey(k, x, y);
+    static bool flag = false;
     switch(k)
     {
         case 27:{}
@@ -131,6 +132,18 @@ void glutKeyboardFunction(unsigned char k,int x,int y)
             bDisplayList=!bDisplayList;
             break;
         }
+        case '0':
+        {
+            if (flag)
+            {
+                glEnable(GL_LIGHT0);
+            }
+            else{
+                glDisable(GL_LIGHT0);
+            }
+            flag = 1- flag;
+            break;
+        }
         default:
         {
             break;
@@ -138,27 +151,45 @@ void glutKeyboardFunction(unsigned char k,int x,int y)
     }
 }
 
-void drawObject(Object* obj)
+void drawObject(Object* obj,Vector3 defaultColor)
 {
     glPushMatrix();
-	if (obj->bColorFlag)
-	{
-		glColor3f(obj->color.x, obj->color.y, obj->color.z);
-	}
-	if (obj->bLocationFlag)
-	{
-		glTranslatef(obj->location.x, obj->location.y, obj->location.z);
-	}
-	if (obj->bRotateFlag)
-	{
-		glRotatef(obj->rotate.x, 1, 0, 0);
-		glRotatef(obj->rotate.y, 0, 1, 0);
-		glRotatef(obj->rotate.z, 0, 0, 1);
-	}
-	if (obj->bSizeFlag)
-	{
-		glScalef(obj->size.x, obj->size.y, obj->size.z);
-	}
+    
+    if (obj->color.x != -1)
+    {
+//        glColor3f(obj->color.x, obj->color.y, obj->color.z);
+        defaultColor = obj->color;
+    }
+    float ambient[4];
+    float diffuse[4];
+    float specular[4];
+    
+    ambient[0] = defaultColor.x;
+    ambient[1] = defaultColor.y;
+    ambient[2] = defaultColor.z;
+    ambient[3] = 1.0f;
+    diffuse[0] = defaultColor.x;
+    diffuse[1] = defaultColor.y;
+    diffuse[2] = defaultColor.z;
+    diffuse[3] = 1.0f;
+    specular[0] = defaultColor.x;
+    specular[1] = defaultColor.y;
+    specular[2] = defaultColor.z;
+    specular[3] = 1.0f;
+    
+    //        GLfloat emission[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat shininess  = 120.0f;
+    glMaterialfv(GL_FRONT, GL_AMBIENT,   ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,   diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR,  specular);
+    //        glMaterialfv(GL_FRONT, GL_EMISSION,  emission);
+    glMaterialf (GL_FRONT, GL_SHININESS, shininess);
+    //        glColor3f(defaultColor.x, defaultColor.y, defaultColor.z);
+    glTranslatef(obj->location.x, obj->location.y, obj->location.z);
+    glRotatef(obj->rotate.x, 1, 0, 0);
+    glRotatef(obj->rotate.y, 0, 1, 0);
+    glRotatef(obj->rotate.z, 0, 0, 1);
+    glScalef(obj->size.x, obj->size.y, obj->size.z);
     if (obj->visible)
     {
         obj->draw();
@@ -166,7 +197,7 @@ void drawObject(Object* obj)
     obj->script();
     for (int i = 0;i<int(obj->children.size());i++)
     {
-        drawObject(obj->children[i]);
+        drawObject(obj->children[i],defaultColor);
     }
     glPopMatrix();
 }
@@ -177,6 +208,27 @@ void glutDisplayFunction()
     glLoadIdentity(); // set model-view matrix
     
     gluLookAt(mainCamera.location.x,mainCamera.location.y,mainCamera.location.z,mainCamera.center.x,mainCamera.center.y,mainCamera.center.z,0.0,1.0,0.0);
+    glPushMatrix();
+    
+    {
+        GLfloat sun_light_position[] = {50.0f, 60.0f, -50.0f, 1.0f};
+        GLfloat sun_light_ambient[]  ={0.0f, 0.0f, 0.0f, 1.0f};
+        GLfloat sun_light_diffuse[]  = {15 , 15, 15, 1.0f};
+        GLfloat sun_light_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+        GLfloat attenuation[] = {1,0,0};
+        glLightfv(GL_LIGHT0, GL_POSITION, sun_light_position); //指定第0号光源的位置
+        glLightfv(GL_LIGHT0, GL_AMBIENT,  sun_light_ambient); //GL_AMBIENT表示各种光线照射到该材质上，
+        //经过很多次反射后最终遗留在环境中的光线强度（颜色）
+        glLightfv(GL_LIGHT0, GL_DIFFUSE,  sun_light_diffuse); //漫反射后~~
+        glLightfv(GL_LIGHT0, GL_SPECULAR, sun_light_specular);//镜面反射后~~~、
+//        glLightfv(GL_LIGHT0, GL_CONSTANT_ATTENUATION, attenuation);
+        
+//        glEnable(GL_LIGHT0); //使用第0号光照
+        glEnable(GL_LIGHTING); //在后面的渲染中使用光照
+        glEnable(GL_DEPTH_TEST);
+        
+    }
+    glPopMatrix();
     if (bWire)
     {
         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
@@ -189,7 +241,7 @@ void glutDisplayFunction()
     {
         if (objectList[i]->parent == nullptr)
         {
-            drawObject(objectList[i]);
+            drawObject(objectList[i],Vector3(0.7,0.7,0.7));
         }
         
     }
@@ -255,6 +307,7 @@ int main(int argc,char *argv[])
     glutMotionFunc( glutMouseMove );
     objectList.push_back(&mainCamera);
     addObject(&objectList);
+    
     glutMainLoop(); // display everything and wait
     return 0;
 }

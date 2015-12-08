@@ -13,7 +13,7 @@
 Player::Player()
 {
     PI = 3.1415926535897;
-    tAngInc = PI / 30;
+    tAngInc = PI / 60;
     tVerticalAng = 0;
     tHorizonAng = -PI / 2;
     tRadius = 400.0;
