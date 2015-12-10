@@ -6,6 +6,7 @@
 #include "gluthead.h"
 #include "object.hpp"
 #include "basicobject/camera.hpp"
+#include "basicobject/light.hpp"
 
 #define defineCheckerImageWidth 64
 #define defineCheckerImageHeight 64
@@ -132,18 +133,7 @@ void glutKeyboardFunction(unsigned char k,int x,int y)
             bDisplayList=!bDisplayList;
             break;
         }
-        case '0':
-        {
-            if (flag)
-            {
-                glEnable(GL_LIGHT0);
-            }
-            else{
-                glDisable(GL_LIGHT0);
-            }
-            flag = 1- flag;
-            break;
-        }
+        
         default:
         {
             break;
@@ -157,39 +147,81 @@ void drawObject(Object* obj,Vector3 defaultColor)
     
     if (obj->color.x != -1)
     {
-//        glColor3f(obj->color.x, obj->color.y, obj->color.z);
         defaultColor = obj->color;
     }
-    float ambient[4];
-    float diffuse[4];
-    float specular[4];
-    
-    ambient[0] = defaultColor.x;
-    ambient[1] = defaultColor.y;
-    ambient[2] = defaultColor.z;
-    ambient[3] = 1.0f;
-    diffuse[0] = defaultColor.x;
-    diffuse[1] = defaultColor.y;
-    diffuse[2] = defaultColor.z;
-    diffuse[3] = 1.0f;
-    specular[0] = defaultColor.x;
-    specular[1] = defaultColor.y;
-    specular[2] = defaultColor.z;
-    specular[3] = 1.0f;
-    
-    //        GLfloat emission[] = {0.0f, 0.0f, 0.0f, 1.0f};
-    GLfloat shininess  = 120.0f;
-    glMaterialfv(GL_FRONT, GL_AMBIENT,   ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE,   diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR,  specular);
-    //        glMaterialfv(GL_FRONT, GL_EMISSION,  emission);
-    glMaterialf (GL_FRONT, GL_SHININESS, shininess);
-    //        glColor3f(defaultColor.x, defaultColor.y, defaultColor.z);
+    if (obj->isLight == false)
+    {
+        float ambient[4];
+        float diffuse[4];
+        float specular[4];
+        // color part
+        
+        
+        ambient[0] = defaultColor.x;
+        ambient[1] = defaultColor.y;
+        ambient[2] = defaultColor.z;
+        ambient[3] = 1.0f;
+        diffuse[0] = defaultColor.x;
+        diffuse[1] = defaultColor.y;
+        diffuse[2] = defaultColor.z;
+        diffuse[3] = 1.0f;
+        specular[0] = obj->highLightColor.x;
+        specular[1] = obj->highLightColor.y;
+        specular[2] = obj->highLightColor.z;
+        specular[3] = 1.0f;
+        
+        //        GLfloat emission[] = {0.0f, 0.0f, 0.0f, 1.0f};
+        GLfloat shininess  = 40.0f;
+        glMaterialfv(GL_FRONT, GL_AMBIENT,   ambient);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE,   diffuse);
+        glMaterialfv(GL_FRONT, GL_SPECULAR,  specular);
+        //        glMaterialfv(GL_FRONT, GL_EMISSION,  emission);
+        glMaterialf (GL_FRONT, GL_SHININESS, shininess);
+        glColor3f(defaultColor.x, defaultColor.y, defaultColor.z);
+    }
+    //
     glTranslatef(obj->location.x, obj->location.y, obj->location.z);
     glRotatef(obj->rotate.x, 1, 0, 0);
     glRotatef(obj->rotate.y, 0, 1, 0);
     glRotatef(obj->rotate.z, 0, 0, 1);
     glScalef(obj->size.x, obj->size.y, obj->size.z);
+    
+    if (obj->isLight)
+    {
+        float position[4] = {0,0,0,1};
+        GLfloat ambient[4];
+        float diffuse[4];
+        float specular[4];
+        float attenuation[3];
+        Light *light = dynamic_cast<Light*>(obj);
+        ambient[0] = light->ambient.x;
+        ambient[1] = light->ambient.y;
+        ambient[2] = light->ambient.z;
+        ambient[3] = 1;
+        diffuse[0] = light->diffuse.x;
+        diffuse[1] = light->diffuse.y;
+        diffuse[2] = light->diffuse.z;
+        diffuse[3] = 1;
+        specular[0] = light->specular.x;
+        specular[1] = light->specular.y;
+        specular[2] = light->specular.z;
+        specular[3] = 1;
+        attenuation[0] = light->attenuation.x;
+        attenuation[1] = light->attenuation.y;
+        attenuation[2] = light->attenuation.z;
+        
+        glLightfv(light->usedLight, GL_POSITION, position);
+        glLightfv(light->usedLight, GL_AMBIENT,  ambient);
+        glLightfv(light->usedLight, GL_DIFFUSE,  diffuse);
+        glLightfv(light->usedLight, GL_SPECULAR,  specular);
+        glLightfv(light->usedLight, GL_CONSTANT_ATTENUATION, attenuation);
+        if (light->open) glEnable(light->usedLight);
+        else
+        {
+            glDisable(light->usedLight);
+        }
+        
+    }
     if (obj->visible)
     {
         obj->draw();
@@ -209,25 +241,25 @@ void glutDisplayFunction()
     
     gluLookAt(mainCamera.location.x,mainCamera.location.y,mainCamera.location.z,mainCamera.center.x,mainCamera.center.y,mainCamera.center.z,0.0,1.0,0.0);
     glPushMatrix();
-    
-    {
-        GLfloat sun_light_position[] = {50.0f, 60.0f, -50.0f, 1.0f};
-        GLfloat sun_light_ambient[]  ={0.0f, 0.0f, 0.0f, 1.0f};
-        GLfloat sun_light_diffuse[]  = {15 , 15, 15, 1.0f};
-        GLfloat sun_light_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
-        GLfloat attenuation[] = {1,0,0};
-        glLightfv(GL_LIGHT0, GL_POSITION, sun_light_position); //指定第0号光源的位置
-        glLightfv(GL_LIGHT0, GL_AMBIENT,  sun_light_ambient); //GL_AMBIENT表示各种光线照射到该材质上，
-        //经过很多次反射后最终遗留在环境中的光线强度（颜色）
-        glLightfv(GL_LIGHT0, GL_DIFFUSE,  sun_light_diffuse); //漫反射后~~
-        glLightfv(GL_LIGHT0, GL_SPECULAR, sun_light_specular);//镜面反射后~~~、
+//    
+//    {
+//        GLfloat sun_light_position[] = {0, 0, 0, 1.0f};
+//        GLfloat sun_light_ambient[]  ={0.4, 0.4, 0.4, 1.0f};
+//        GLfloat sun_light_diffuse[]  = {1 , 1 , 1, 1};
+//        GLfloat sun_light_specular[] = {1, 1, 1, 1};
+//        GLfloat attenuation[] = {1,0,0};
+//        glLightfv(GL_LIGHT0, GL_POSITION, sun_light_position); //指定第0号光源的位置
+//        glLightfv(GL_LIGHT0, GL_AMBIENT,  sun_light_ambient); //GL_AMBIENT表示各种光线照射到该材质上，
+//        //经过很多次反射后最终遗留在环境中的光线强度（颜色）
+//        glLightfv(GL_LIGHT0, GL_DIFFUSE,  sun_light_diffuse); //漫反射后~~
+////        glLightfv(GL_LIGHT0, GL_SPECULAR, sun_light_specular);//镜面反射后~~~、
 //        glLightfv(GL_LIGHT0, GL_CONSTANT_ATTENUATION, attenuation);
-        
-//        glEnable(GL_LIGHT0); //使用第0号光照
+//        
         glEnable(GL_LIGHTING); //在后面的渲染中使用光照
         glEnable(GL_DEPTH_TEST);
-        
-    }
+//
+//    }
+    
     glPopMatrix();
     if (bWire)
     {

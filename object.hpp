@@ -25,7 +25,9 @@ public:
     Vector3 rotate;
     Vector3 size;
     Vector3 color;
+    Vector3 highLightColor;
     bool isCamera;
+    bool isLight;
     bool visible;
     Object* parent;
     std::vector<Object*> children;
@@ -45,6 +47,9 @@ public:
 		rotate = Vector3(0.0,0.0,0.0);
         size = Vector3(1.0,1.0,1.0);
         color = Vector3(-1,-1,-1);
+        highLightColor = Vector3(0,0,0);
+        isCamera = false;
+        isLight = false;
     }
     static bool keyDown[256],mouseClicked,mouseClickedRight;
     static double keyLoc[256][2];
