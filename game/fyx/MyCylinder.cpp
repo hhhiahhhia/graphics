@@ -5,9 +5,7 @@
 int PI = 3.141592653;
 
 void MyCylinder::script()
-{
-	//bool bSign = true;
-		
+{		
 	if (bSign)
 	{
 		location.z -= 0.05;
@@ -24,17 +22,15 @@ void MyCylinder::script()
 
 void MyCylinder::draw() 
 {
-    GLUquadricObj *Cylinder1 = gluNewQuadric();
+	GLUquadricObj *Cylinder1 = gluNewQuadric();
   
-    glPushMatrix(); 
-	glColor3f(0.0, 0.5, 0.9);
+	glPushMatrix(); 	
 	gluCylinder(Cylinder1, 3.0, 3.0, 10.0, 32, 5);
 	glPopMatrix();
 
 	glPushMatrix();
-	glColor3f(0.3, 0.2, 1.0);
 	DrawCircleArea(0.0, 0.0, 10.0, 3.0, 32);//top  
-    DrawCircleArea(0.0, 0.0, 0.0, 3.0, 32);//base
+    	DrawCircleArea(0.0, 0.0, 0.0, 3.0, 32);//base
 	glPopMatrix();
 
 }
@@ -55,8 +51,8 @@ void DrawCircleArea(float cx, float cy, float cz, float r, int num_segments)
 	//draw the vertex on the contour of the circle  
 	for (int i = 0; i < num_segments; i++)
 	{
-		vertex[0] = cos(delta_angle*i) * r + cx;
-		vertex[1] = sin(delta_angle*i) * r + cy;
+		vertex[0] = std::cos(delta_angle*i) * r + cx;
+		vertex[1] = std::sin(delta_angle*i) * r + cy;
 		vertex[2] = cz;
 		vertex[3] = 1.0;
 		glVertex4fv(vertex);
