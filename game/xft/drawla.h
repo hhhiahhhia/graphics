@@ -10,7 +10,6 @@ public:
   virtual void draw();
   drawla()
   {
-	bSizeFlag=true;
 	size=Vector3(2.0,2.0,2.0);
   }
 };

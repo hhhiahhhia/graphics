@@ -11,8 +11,16 @@
 
 #include <stdio.h>
 #include "../../basicobject/triangle.hpp"
-class RotatingTriangle:public Triangle
+#include "../../basicobject/teapot.hpp"
+class RotatingTriangle:public Teapot
 {
+    
+public:
+    RotatingTriangle()
+    {
+        useTexture = true;
+        texture = LoadTexture("monet.bmp", 512 , 512);
+    }
     virtual void script();
 };
 #endif /* rotatingtriangle_hpp */

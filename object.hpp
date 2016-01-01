@@ -26,14 +26,27 @@ public:
     Vector3 size;
     Vector3 color;
     Vector3 highLightColor;
+    GLint texture;
     bool isCamera;
     bool isLight;
     bool visible;
+    bool useTexture;
+    bool disableTexture;
     Object* parent;
     std::vector<Object*> children;
     virtual void script(){}
     virtual void draw(){}
     virtual void clicked(){}
+    virtual void shader()
+    {
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture( GL_TEXTURE_2D, texture );
+        glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE );
+    }
+    virtual void closeShader()
+    {
+        glDisable(GL_TEXTURE_2D);
+    }
     void addChild(Object* newObject)
     {
         children.push_back(newObject);
@@ -50,6 +63,7 @@ public:
         highLightColor = Vector3(0,0,0);
         isCamera = false;
         isLight = false;
+        useTexture = false;
     }
     static bool keyDown[256],mouseClicked,mouseClickedRight;
     static double keyLoc[256][2];
@@ -59,4 +73,5 @@ public:
     static bool keyPushed(unsigned char key);
 };
 void addObject(std::vector<Object*>*);
+GLuint LoadTexture( const char * filename ,int width, int height);
 #endif /* object_hpp */

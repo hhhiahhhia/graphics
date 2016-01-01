@@ -222,8 +222,13 @@ void drawObject(Object* obj,Vector3 defaultColor)
         }
         
     }
+    glPushAttrib(GL_TEXTURE_BIT);
     if (obj->visible)
     {
+        if (obj->useTexture)
+        {
+            obj->shader();
+        }
         obj->draw();
     }
     obj->script();
@@ -231,6 +236,8 @@ void drawObject(Object* obj,Vector3 defaultColor)
     {
         drawObject(obj->children[i],defaultColor);
     }
+    obj->closeShader();
+    glPopAttrib();
     glPopMatrix();
 }
 void glutDisplayFunction()
@@ -241,24 +248,9 @@ void glutDisplayFunction()
     
     gluLookAt(mainCamera.location.x,mainCamera.location.y,mainCamera.location.z,mainCamera.center.x,mainCamera.center.y,mainCamera.center.z,0.0,1.0,0.0);
     glPushMatrix();
-//    
-//    {
-//        GLfloat sun_light_position[] = {0, 0, 0, 1.0f};
-//        GLfloat sun_light_ambient[]  ={0.4, 0.4, 0.4, 1.0f};
-//        GLfloat sun_light_diffuse[]  = {1 , 1 , 1, 1};
-//        GLfloat sun_light_specular[] = {1, 1, 1, 1};
-//        GLfloat attenuation[] = {1,0,0};
-//        glLightfv(GL_LIGHT0, GL_POSITION, sun_light_position); //指定第0号光源的位置
-//        glLightfv(GL_LIGHT0, GL_AMBIENT,  sun_light_ambient); //GL_AMBIENT表示各种光线照射到该材质上，
-//        //经过很多次反射后最终遗留在环境中的光线强度（颜色）
-//        glLightfv(GL_LIGHT0, GL_DIFFUSE,  sun_light_diffuse); //漫反射后~~
-////        glLightfv(GL_LIGHT0, GL_SPECULAR, sun_light_specular);//镜面反射后~~~、
-//        glLightfv(GL_LIGHT0, GL_CONSTANT_ATTENUATION, attenuation);
-//        
-        glEnable(GL_LIGHTING); //在后面的渲染中使用光照
-        glEnable(GL_DEPTH_TEST);
-//
-//    }
+    glEnable(GL_LIGHTING); //在后面的渲染中使用光照
+    glEnable(GL_DEPTH_TEST);
+
     
     glPopMatrix();
     if (bWire)

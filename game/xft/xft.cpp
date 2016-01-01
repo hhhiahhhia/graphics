@@ -20,39 +20,32 @@ void myrotate::script()
 void xftPart(std::vector<Object*>* objectList)
 { 
   drawx *drawlamp=new drawx;
-  drawlamp->bColorFlag=true;
   drawlamp->color=Vector3(1.0,0.0,0.0);
-  drawlamp->bLocationFlag=true;
   drawlamp->location=Vector3(50.0,90.0,-50.0);
-  drawlamp->bRotateFlag=true;
   drawlamp->rotate=Vector3(0.0,90,0.0);
   objectList->push_back(drawlamp);
  
   
   drawx *drawlamp1=new drawx;
-   drawlamp1->bLocationFlag=true;
   drawlamp1->location=Vector3(20,0,0);
   drawlamp->addChild(drawlamp1);
 
   drawx *drawsc=new drawx;
-  drawsc->bSizeFlag=true;
   drawsc->size=Vector3(5.0,5.0,5.0);
   drawlamp->addChild(drawsc);
 
   drawla *drawsphere1=new drawla;
-   drawsc->addChild(drawsphere1);
+  drawsc->addChild(drawsphere1);
 
   
    
 
   drawx *drawlamp2=new drawx;
-  drawlamp2->bSizeFlag=true;
   drawlamp2->size=Vector3(2.0,2.0,2.0);
   drawlamp1->addChild(drawlamp2);
   
   drawla *drawsphere2=new drawla;
   
-  drawsphere2->bColorFlag=true;
   drawsphere2->color=Vector3(0.2,0.2,0.0);
   drawlamp2->addChild(drawsphere2);
    
