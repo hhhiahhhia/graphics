@@ -8,7 +8,7 @@ void fyxPart(std::vector<Object*>* objectList)
 	objectList->push_back(CylinderOne);
 
     	MyCylinder * CylinderOneOne = new MyCylinder();
-    	CylinderOneOne->color = Vector3(0.8,0.0,0.6);
+    	CylinderOneOne->color = Vector3(0.8,0.9,0.6);
 	CylinderOneOne->location = Vector3(60,3,-3);
 	CylinderOneOne->rotate = Vector3(0,90,0);
 	CylinderOne->addChild(CylinderOneOne);
