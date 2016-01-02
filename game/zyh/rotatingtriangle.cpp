@@ -9,5 +9,6 @@
 #include "rotatingtriangle.hpp"
 void RotatingTriangle::script()
 {
+    if (ifrotate)
     rotate.y+=1;
 }

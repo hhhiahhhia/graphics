@@ -3,10 +3,18 @@
 #include <string.h>
 #include <math.h>
 #include <vector>
+#include <iostream>
 #include "gluthead.h"
 #include "object.hpp"
 #include "basicobject/camera.hpp"
 #include "basicobject/light.hpp"
+
+#define PICK_TOL 5
+#define PICK_BUFFER_SIZE 256
+unsigned int PickBuffer[PICK_BUFFER_SIZE];
+int RenderMode;
+
+
 
 #define defineCheckerImageWidth 64
 #define defineCheckerImageHeight 64
@@ -27,6 +35,7 @@ bool bAnim=false;
 bool bDisplayList=true;
 
 std::vector<Object*> objectList;//main list
+std::vector<Object*> clickList;
 Camera mainCamera;
 
 void makeCheckerImageFunction()
@@ -78,7 +87,7 @@ void updateViewFunction(GLsizei width,GLsizei height)
     GLfloat fWidthHeightRatio=(GLfloat)width/(GLfloat)height; // calculate aspect ratio of window
     if (bPersp)
     {
-        gluPerspective(60.0,fWidthHeightRatio,0.1,1000.0);
+        gluPerspective(45.0,fWidthHeightRatio,0.1,1000.0);
         // glFrustum(-3.0,3.0,-3.0,3.0,0.1,100.0);
     }
     else
@@ -229,6 +238,8 @@ void drawObject(Object* obj,Vector3 defaultColor)
         {
             obj->shader();
         }
+        glPushName( clickList.size() );
+        clickList.push_back(obj);
         obj->draw();
     }
     obj->script();
@@ -237,15 +248,38 @@ void drawObject(Object* obj,Vector3 defaultColor)
         drawObject(obj->children[i],defaultColor);
     }
     obj->closeShader();
+    glPopName();
     glPopAttrib();
     glPopMatrix();
 }
 void glutDisplayFunction()
 {
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW); // select model-view matrix
-    glLoadIdentity(); // set model-view matrix
+    if( RenderMode == GL_SELECT )
     
+    {
+        int viewport[4];
+        glMatrixMode(GL_PROJECTION); //保存投影矩阵
+        glPushMatrix();
+        glLoadIdentity();
+        int dx = glutGet( GLUT_WINDOW_WIDTH );
+        
+        int dy = glutGet( GLUT_WINDOW_HEIGHT );
+        glGetIntegerv(GL_VIEWPORT,viewport);
+        
+        gluPickMatrix( (double)Object::mouseX, (double)(dy - Object::mouseY),
+                      
+                      PICK_TOL, PICK_TOL, viewport );
+        gluPerspective(45,dx/dy,0.1,1000);
+        glInitNames();
+        
+        
+    }
+//    else
+//    {
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        glMatrixMode(GL_MODELVIEW); // select model-view matrix
+        glLoadIdentity(); // set model-view matrix
+//    }
     gluLookAt(mainCamera.location.x,mainCamera.location.y,mainCamera.location.z,mainCamera.center.x,mainCamera.center.y,mainCamera.center.z,0.0,1.0,0.0);
     glPushMatrix();
     glEnable(GL_LIGHTING); //在后面的渲染中使用光照
@@ -261,6 +295,7 @@ void glutDisplayFunction()
     {
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     }
+    clickList.erase(clickList.begin(),clickList.end());
     for (int i = 0; i<int(objectList.size()); i++)
     {
         if (objectList[i]->parent == nullptr)
@@ -272,8 +307,16 @@ void glutDisplayFunction()
     //    drawModelFunction();
     
     // getFPS();
+    if (RenderMode == GL_RENDER)
+        glutSwapBuffers();
+    else
+    {
+        glMatrixMode(GL_PROJECTION);
+        glPopMatrix();
+        glMatrixMode(GL_MODELVIEW);
+        glFlush();
+    }
     
-    glutSwapBuffers();
 }
 void glutKeyboardReleaseFunction(unsigned char k,int x,int y)
 {
@@ -289,6 +332,60 @@ void glutMousefunction(int button, int state,
             if (state == GLUT_DOWN)
             {
                 Object::mouseClicked = true;
+                RenderMode = GL_SELECT;
+                
+                glRenderMode( GL_SELECT );
+                
+                glutDisplayFunction();
+                
+                
+                
+                
+                RenderMode = GL_RENDER;
+                
+                int Nhits = glRenderMode( GL_RENDER );
+                
+//                fprintf( stderr, "# pick hits = %d\n", Nhits );
+                int nitems,zmin,zmax;
+                for( int i = 0,index = 0; i < Nhits; i++ )
+                
+                {
+                    nitems = PickBuffer[index++];
+                    
+                    zmin = PickBuffer[index++];
+                    
+                    zmax = PickBuffer[index++];
+//                    fprintf( stderr,
+//                            
+//                            "Hit # %2d: found %2d items on the name stack/n",
+//                            
+//                            i, nitems );
+//                    
+//                    
+//                    fprintf( stderr, "/tZmin = 0x%0x, Zmax = 0x%0x/n",
+//                            
+//                            zmin, zmax );
+                   
+                    for( int j = 0; j < nitems; j++ )
+                    
+                    {
+                        
+                        int item = PickBuffer[index++];
+                        if (i == Nhits -1)
+                        {
+                            clickList[item]->clicked();
+                        }
+                        
+                    }
+                    
+                }
+                
+//                ActiveButton &= ~LEFT;
+//                
+//                glutSetWindow( GrWindow );
+                
+                glutPostRedisplay();
+                
             }
             else
             {
@@ -306,6 +403,7 @@ void glutMousefunction(int button, int state,
                 Object::mouseClickedRight = false;
             }
         }
+            
     }
 }
 void glutMouseMove(int x, int y )
@@ -331,7 +429,8 @@ int main(int argc,char *argv[])
     glutMotionFunc( glutMouseMove );
     objectList.push_back(&mainCamera);
     addObject(&objectList);
-    
+    RenderMode = GL_RENDER;
+    glSelectBuffer( PICK_BUFFER_SIZE, PickBuffer );
     glutMainLoop(); // display everything and wait
     return 0;
 }

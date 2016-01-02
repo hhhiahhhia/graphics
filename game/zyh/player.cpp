@@ -22,30 +22,34 @@ Player::Player()
 }
 void Player::script()
 {
-    if(preMouseX!=-1 && preMouseY!=-1 && mouseX!=-1 && mouseY!=-1) {
-        double tDx = mouseX - preMouseX;
-        double tDy = -mouseY + preMouseY;
-        double tDis = sqrt(tDx*tDx+tDy*tDy);
-        if(tDx > 0.) {
-            tHorizonAng += tAngInc * tDx / tDis;
-            if(tHorizonAng < 0.) { tHorizonAng += 2*PI; }
-            if(tHorizonAng > 2*PI) { tHorizonAng -= 2*PI; }
-        } else if(tDx < 0.) {
-            tHorizonAng += tAngInc * tDx / tDis;
-            if(tHorizonAng < 0.) { tHorizonAng += 2*PI; }
-            if(tHorizonAng > 2*PI) { tHorizonAng -= 2*PI; }
-        }
-        if(tDy > 0.) {
-            tVerticalAng = tVerticalAng + tAngInc * tDy / tDis;
-            if(tVerticalAng > PI/2) { tVerticalAng = PI/2; }
-        } else if(tDy < 0.) {
-            tVerticalAng = tVerticalAng + tAngInc * tDy / tDis;
-            if(tVerticalAng < -PI/2) { tVerticalAng = -PI/2; }
+    if (mouseClicked)
+    {
+        if(preMouseX!=-1 && preMouseY!=-1 && mouseX!=-1 && mouseY!=-1) {
+            double tDx = mouseX - preMouseX;
+            double tDy = -mouseY + preMouseY;
+            double tDis = sqrt(tDx*tDx+tDy*tDy);
+            if(tDx > 0.) {
+                tHorizonAng += tAngInc * tDx / tDis;
+                if(tHorizonAng < 0.) { tHorizonAng += 2*PI; }
+                if(tHorizonAng > 2*PI) { tHorizonAng -= 2*PI; }
+            } else if(tDx < 0.) {
+                tHorizonAng += tAngInc * tDx / tDis;
+                if(tHorizonAng < 0.) { tHorizonAng += 2*PI; }
+                if(tHorizonAng > 2*PI) { tHorizonAng -= 2*PI; }
+            }
+            if(tDy > 0.) {
+                tVerticalAng = tVerticalAng + tAngInc * tDy / tDis;
+                if(tVerticalAng > PI/2) { tVerticalAng = PI/2; }
+            } else if(tDy < 0.) {
+                tVerticalAng = tVerticalAng + tAngInc * tDy / tDis;
+                if(tVerticalAng < -PI/2) { tVerticalAng = -PI/2; }
+            }
+            
+            camera->center.x = camera->location.x + tRadius * cos(tVerticalAng) * cos(tHorizonAng);
+            camera->center.y = camera->location.y + tRadius * sin(tVerticalAng);
+            camera->center.z = camera->location.z + tRadius * cos(tVerticalAng) * sin(tHorizonAng);
         }
         
-        camera->center.x = camera->location.x + tRadius * cos(tVerticalAng) * cos(tHorizonAng);
-        camera->center.y = camera->location.y + tRadius * sin(tVerticalAng);
-        camera->center.z = camera->location.z + tRadius * cos(tVerticalAng) * sin(tHorizonAng);
     }
     preMouseX = mouseX;
     preMouseY = mouseY;
