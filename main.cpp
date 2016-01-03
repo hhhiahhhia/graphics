@@ -153,7 +153,10 @@ void glutKeyboardFunction(unsigned char k,int x,int y)
 void drawObject(Object* obj,Vector3 defaultColor)
 {
     glPushMatrix();
-    
+    if (obj->location.x == 50)
+    {
+        obj->location.x = 50;
+    }
     if (obj->color.x != -1)
     {
         defaultColor = obj->color;
@@ -241,6 +244,7 @@ void drawObject(Object* obj,Vector3 defaultColor)
         glPushName( clickList.size() );
         clickList.push_back(obj);
         obj->draw();
+        glPopName();
     }
     obj->script();
     for (int i = 0;i<int(obj->children.size());i++)
@@ -248,7 +252,6 @@ void drawObject(Object* obj,Vector3 defaultColor)
         drawObject(obj->children[i],defaultColor);
     }
     obj->closeShader();
-    glPopName();
     glPopAttrib();
     glPopMatrix();
 }
@@ -269,7 +272,7 @@ void glutDisplayFunction()
         gluPickMatrix( (double)Object::mouseX, (double)(dy - Object::mouseY),
                       
                       PICK_TOL, PICK_TOL, viewport );
-        gluPerspective(45,dx/dy,0.1,1000);
+        gluPerspective(45,(GLfloat)dx/(GLfloat)dy,0.1,1000);
         glInitNames();
         
         
@@ -373,7 +376,15 @@ void glutMousefunction(int button, int state,
                         int item = PickBuffer[index++];
                         if (i == Nhits -1)
                         {
-                            clickList[item]->clicked();
+                            Object* obj = clickList[item];
+                            while (obj->parent!=nullptr)
+                            {
+                                obj->clicked();
+                                obj = obj->parent;
+                            }
+                            obj->clicked();
+
+                            
                         }
                         
                     }

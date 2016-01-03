@@ -14,11 +14,6 @@
 #include "mainlight.hpp"
 void zyhPart(std::vector<Object*>* objectList)
 {
-    Triangle *t1 = new Triangle;
-    t1->location.x = 50.0;
-    t1->location.y = 10;
-    t1->location.z = -50;
-    objectList->push_back(t1);
     Triangle *t2 = new Triangle;
     t2->location.x =50.0;
     t2->location.y = 10;
@@ -33,15 +28,6 @@ void zyhPart(std::vector<Object*>* objectList)
     RotatingTriangle* rt1 = new RotatingTriangle;
     rt1->location = Vector3(70,10,-50);
     objectList->push_back(rt1);
-    Triangle *t4 = new Triangle;
-    t4->location.x = 70.0;
-    t4->location.y = 10;
-    t4->location.z = -50;
-    t4->size = Vector3(5,1,1);
-    t4->rotate = Vector3(0,0,90);
-    
-//    objectList->push_back(t4);
-    objectList->push_back(t1);
     Player *player = new Player;
     player->camera = dynamic_cast<Camera*>((*objectList)[0]);
     objectList->push_back(player);
