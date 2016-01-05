@@ -10,13 +10,13 @@ void MyCylinder::script()
 	{
 		location.z -= 0.05;
 		rotate.x -= 1.2 / PI;
-		if(fabs(location.z+97.0) < 1e-6) bSign = !bSign;
+		if(fabs(location.z+96.0) < 1e-6) bSign = !bSign;
 	}
 	else
 	{
 		location.z += 0.05;
 		rotate.x += 1.2 / PI;
-		if (fabs(location.z+3.0) < 1e-6) bSign = !bSign;
+		if (fabs(location.z+4.0) < 1e-6) bSign = !bSign;
 	}
 }
 
