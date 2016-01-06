@@ -2,7 +2,7 @@
 #include "MyCylinder.h"
 #include "MyObject.h"
 #include "NewWall.h"
-#include "cube.hpp"
+#include "../../basicobject/cube.hpp"
 #include "Top.h"
 #include "Bottom.h"
 
