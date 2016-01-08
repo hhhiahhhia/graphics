@@ -246,7 +246,7 @@ void drawObject(Object* obj,Vector3 defaultColor)
         obj->draw();
         glPopName();
     }
-    obj->script();
+    
     for (int i = 0;i<int(obj->children.size());i++)
     {
         drawObject(obj->children[i],defaultColor);
@@ -254,6 +254,14 @@ void drawObject(Object* obj,Vector3 defaultColor)
     obj->closeShader();
     glPopAttrib();
     glPopMatrix();
+}
+void runObjectScript(Object* obj)
+{
+    obj->script();
+    for (int i = 0;i<int(obj->children.size());i++)
+    {
+        runObjectScript(obj->children[i]);
+    }
 }
 void glutDisplayFunction()
 {
@@ -307,6 +315,14 @@ void glutDisplayFunction()
         }
         
     }
+    for (int i = 0; i<int(objectList.size()); i++)
+    {
+        if (objectList[i]->parent == nullptr)
+        {
+            runObjectScript(objectList[i]);
+        }
+        
+    }
     //    drawModelFunction();
     
     // getFPS();
@@ -324,6 +340,7 @@ void glutDisplayFunction()
 void glutKeyboardReleaseFunction(unsigned char k,int x,int y)
 {
     Object::upKey(k,x,y);
+    Object::clickedList.erase(Object::clickedList.begin(),Object::clickedList.end());
 }
 void glutMousefunction(int button, int state,
                        int x, int y)
@@ -377,10 +394,12 @@ void glutMousefunction(int button, int state,
                         if (i == Nhits -1)
                         {
                             Object* obj = clickList[item];
+                            Object::clickedList.push_back(obj);
                             while (obj->parent!=nullptr)
                             {
                                 obj->clicked();
                                 obj = obj->parent;
+                                Object::clickedList.push_back(obj);
                             }
                             obj->clicked();
 

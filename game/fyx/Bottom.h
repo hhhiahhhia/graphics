@@ -2,15 +2,14 @@
 #define Bottom_h
 
 #include <stdio.h>
-#include "../../object.hpp"
+#include "../../basicobject/cube.hpp"
 
-class Bottom:public Object
+class Bottom:public Cube
 {
   public:
-     virtual void draw();
      Bottom(){
-     	  useTexture = true;
-        texture = LoadTexture("wall7.bmp", 512 , 512);
+     	useTexture = true;
+        texture = LoadTexture("floor1.bmp", 512 , 512);
      }
 };
 

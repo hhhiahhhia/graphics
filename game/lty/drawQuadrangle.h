@@ -8,6 +8,9 @@ class drawQuadrangle:public Object
 {
 public:
   virtual void draw();
+    drawQuadrangle()
+    {
+    }
 };
 
 #endif

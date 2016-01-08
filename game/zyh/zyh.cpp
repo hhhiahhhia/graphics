@@ -11,7 +11,10 @@
 #include "rotatingtriangle.hpp"
 #include "player.hpp"
 #include "../../basicobject/light.hpp"
+#include "../../basicobject/cube.hpp"
 #include "mainlight.hpp"
+#include "exporter.hpp"
+#include "../../basicobject/monkey.hpp"
 void zyhPart(std::vector<Object*>* objectList)
 {
     Triangle *t2 = new Triangle;
@@ -36,6 +39,21 @@ void zyhPart(std::vector<Object*>* objectList)
     light->location = Vector3(50,90,-50);
     light->ambient = Vector3(0.4,0.4,0.4);
     objectList->push_back(light);
+    
+    Cube * c1 = new Cube;
+    c1->location = Vector3(30,10,-30);
+    c1->useTexture = true;
+    c1->texture = LoadTexture("monet.bmp", 512, 512);
+    objectList->push_back(c1);
+    Exporter *exp = new Exporter;
+    objectList->push_back(exp);
+    
+    monkey *m = new monkey;
+    m->location = Vector3(50,10,-50);
+    m->size = Vector3(10,10,10);
+    m->color = Vector3(0.5,0.5,0.5);
+    objectList->push_back(m);
+    
     
     
     
