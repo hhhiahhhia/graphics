@@ -36,7 +36,7 @@ void zyhPart(std::vector<Object*>* objectList)
     player->camera = dynamic_cast<Camera*>((*objectList)[0]);
     objectList->push_back(player);
     
-    MainLight *light = new MainLight(Vector3(1,1,1));
+    MainLight *light = new MainLight(Vector3(0.5,0.5,0.5));
     light->location = Vector3(50,90,-50);
     light->ambient = Vector3(0.4,0.4,0.4);
     objectList->push_back(light);

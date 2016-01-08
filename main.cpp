@@ -205,6 +205,7 @@ void drawObject(Object* obj,Vector3 defaultColor)
         float diffuse[4];
         float specular[4];
         float attenuation[3];
+        float direction[3];
         Light *light = dynamic_cast<Light*>(obj);
         ambient[0] = light->ambient.x;
         ambient[1] = light->ambient.y;
@@ -221,11 +222,23 @@ void drawObject(Object* obj,Vector3 defaultColor)
         attenuation[0] = light->attenuation.x;
         attenuation[1] = light->attenuation.y;
         attenuation[2] = light->attenuation.z;
+        PointLight * pt = dynamic_cast<PointLight*>(light);
+        if (pt != nullptr)
+        {
+            direction[0] = pt->direction.x;
+            direction[1] = pt->direction.y;
+            direction[2] = pt->direction.z;
+            glLightfv(light->usedLight, GL_SPOT_DIRECTION,  direction);
+            glLightf(light->usedLight, GL_SPOT_CUTOFF, pt->angle);
+            
+        }
         
         glLightfv(light->usedLight, GL_POSITION, position);
         glLightfv(light->usedLight, GL_AMBIENT,  ambient);
         glLightfv(light->usedLight, GL_DIFFUSE,  diffuse);
         glLightfv(light->usedLight, GL_SPECULAR,  specular);
+        
+        
         glLightfv(light->usedLight, GL_CONSTANT_ATTENUATION, attenuation);
         if (light->open) glEnable(light->usedLight);
         else

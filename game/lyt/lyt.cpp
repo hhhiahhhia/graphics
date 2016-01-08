@@ -8,14 +8,31 @@
 
 #include "lyt.hpp"
 #include "cone.h"
+#include "table.h"
+#include "lamp.h"
+#include "../../basicobject/cylinder.h"
 
 void lytPart(std::vector<Object*>* objectList)
 {
-    Cone * cone1 = new Cone();
-    cone1->location.x=80;
-    cone1->location.y=0;
-    cone1->location.z=-30;
-    cone1->rotate.x=90;
-    cone1->rotate.y=30;
-    objectList->push_back(cone1);
+    Table * t1 = new Table(15,1,20,6);
+    t1->location.x=12;
+    t1->location.y=6;
+    t1->location.z=-40;
+   
+    Lamp * lamp=new Lamp();
+    lamp->location.x =0;
+    lamp->location.y =7;
+    lamp->location.z =0;
+    
+    t1->addChild(lamp);
+    
+    objectList->push_back(t1);
+    
+//    Cylinder * cover = new Cylinder(5.0,10.0,10.0,false,false);
+//    Cone * cover = new Cone();
+//    cover->location.x=12;
+//    cover->location.y=6;
+//    cover->location.z=-50;
+//    objectList->push_back(cover);
+
 }
