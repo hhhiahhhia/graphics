@@ -12,11 +12,18 @@
 #include <stdio.h>
 #include "gluthead.h"
 #include <vector>
+#include <string>
+using namespace std;
 struct Vector3
 {
     double x,y,z;
     Vector3():x(0),y(0),z(0){};
     Vector3(double x,double y,double z):x(x),y(y),z(z){}
+};
+struct VectorList
+{
+    vector<Vector3> vlist,vtlist,vnlist;
+    vector<vector<Vector3> > drawlist;
 };
 class Object
 {
@@ -37,6 +44,7 @@ public:
     virtual void script(){}
     virtual void draw(){}
     virtual void clicked(){}
+    virtual VectorList exportOBJ(){VectorList v;return v;}
     virtual void shader()
     {
         glEnable(GL_TEXTURE_2D);
@@ -68,6 +76,7 @@ public:
     static bool keyDown[256],mouseClicked,mouseClickedRight;
     static double keyLoc[256][2];
     static double mouseX,mouseY;
+    static std::vector<Object*> clickedList;
     static void upKey(unsigned char key,int x,int y);
     static void downKey(unsigned char key,int x,int y);
     static bool keyPushed(unsigned char key);

@@ -15,5 +15,6 @@ class Cube:public Object
 {
 public:
     virtual void draw();
+
 };
 #endif /* cube_hpp */

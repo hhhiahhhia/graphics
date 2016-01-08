@@ -15,6 +15,7 @@
 bool Object::keyDown[256],Object::mouseClicked,Object::mouseClickedRight;
 double Object::keyLoc[256][2];
 double Object::mouseX,Object::mouseY;
+std::vector<Object*> Object::clickedList;
 void Object::upKey(unsigned char key,int x,int y)
 {
     keyDown[key] = false;
