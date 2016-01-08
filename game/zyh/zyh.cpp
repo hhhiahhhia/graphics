@@ -51,8 +51,8 @@ void zyhPart(std::vector<Object*>* objectList)
     
 
     lamp *la = new lamp;
-    la->location = Vector3(50,10,-30);
-    la->size = Vector3(0.3,0.3,0.3);
+    la->location = Vector3(10,10,-30);
+    la->size = Vector3(0.15,0.15,0.15);
     la->color = Vector3(0.5,0.5,0.5);
     objectList->push_back(la);
 

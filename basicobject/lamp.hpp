@@ -13,6 +13,10 @@
 #include "importedobj.hpp"
 class lamp:public ImportedObj {
 public:
-    lamp():ImportedObj("lamp-old.obj"){}
+    lamp():ImportedObj("lamp.obj")
+    {
+        useTexture = true;
+        texture = LoadTexture("plastic.bmp", 512 , 512);
+    }
 };
 #endif /* lamp_hpp */

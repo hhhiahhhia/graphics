@@ -149,12 +149,12 @@ void ImportedObj::draw()
         glNormalPointer(GL_FLOAT, 0,rvn);
 
     }
-    if (vtFlag)
-    {
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        glTexCoordPointer(2, GL_FIXED_ONLY_ARB, 0, rvt);
-        
-    }
+//    if (vtFlag)
+//    {
+//        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+//        glTexCoordPointer(2, GL_FIXED_ONLY_ARB, 0, rvt);
+//        
+//    }
     //    glutSolidCube(1);
     glBegin(GL_TRIANGLES);
     for (int i=0;i<vsize/3;i++)
