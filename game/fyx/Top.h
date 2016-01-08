@@ -2,15 +2,14 @@
 #define Top_h
 
 #include <stdio.h>
-#include "../../object.hpp"
+#include "../../basicobject/cube.hpp"
 
-class Top:public Object
+class Top:public Cube
 {
   public:
-     virtual void draw();
      Top(){
      	useTexture = true;
-        texture = LoadTexture("wall4.bmp", 512 , 512);
+        texture = LoadTexture("top1.bmp", 512 , 512);
      }
 };
 
