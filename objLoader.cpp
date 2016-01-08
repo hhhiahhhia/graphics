@@ -20,7 +20,7 @@ int main(int argc,char** argv)
     out<<"void "<<className<<"::draw()"<<endl;
     out<<"{"<<endl;
     double v[1000][3],vt[1000][3],vn[1000][3];
-    int indexv = 0, indexvt = 0, indexvn = 0;
+    int indexv = 1, indexvt = 1, indexvn = 1;
     while(1)
     {
         string op;

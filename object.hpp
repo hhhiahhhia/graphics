@@ -44,7 +44,7 @@ public:
     virtual void script(){}
     virtual void draw(){}
     virtual void clicked(){}
-    virtual VectorList exportOBJ(){VectorList v;return v;}
+//    virtual VectorList exportOBJ(){VectorList v;return v;}
     virtual void shader()
     {
         glEnable(GL_TEXTURE_2D);

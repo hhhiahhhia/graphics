@@ -340,7 +340,7 @@ void glutDisplayFunction()
 void glutKeyboardReleaseFunction(unsigned char k,int x,int y)
 {
     Object::upKey(k,x,y);
-    Object::clickedList.erase(Object::clickedList.begin(),Object::clickedList.end());
+//    Object::clickedList.erase(Object::clickedList.begin(),Object::clickedList.end());
 }
 void glutMousefunction(int button, int state,
                        int x, int y)
@@ -367,6 +367,7 @@ void glutMousefunction(int button, int state,
                 
 //                fprintf( stderr, "# pick hits = %d\n", Nhits );
                 int nitems,zmin,zmax;
+                int minZ=0,minIndex=0,minN=0,mF = 0;
                 for( int i = 0,index = 0; i < Nhits; i++ )
                 
                 {
@@ -377,36 +378,49 @@ void glutMousefunction(int button, int state,
                     zmax = PickBuffer[index++];
 //                    fprintf( stderr,
 //                            
-//                            "Hit # %2d: found %2d items on the name stack/n",
+//                            "Hit # %2d: found %2d items on the name stack\n",
 //                            
 //                            i, nitems );
-//                    
-//                    
-//                    fprintf( stderr, "/tZmin = 0x%0x, Zmax = 0x%0x/n",
-//                            
+////
+////                    
+//                    fprintf( stderr, "\tZmin = 0x%0x, Zmax = 0x%0x\n",
+                    
 //                            zmin, zmax );
-                   
+                   if (zmin < minZ || mF == 0)
+                   {
+                       minZ = zmin;
+                       mF = 1;
+                       minIndex = index;
+                       minN = nitems;
+                   }
                     for( int j = 0; j < nitems; j++ )
                     
                     {
                         
                         int item = PickBuffer[index++];
-                        if (i == Nhits -1)
-                        {
-                            Object* obj = clickList[item];
-                            Object::clickedList.push_back(obj);
-                            while (obj->parent!=nullptr)
-                            {
-                                obj->clicked();
-                                obj = obj->parent;
-                                Object::clickedList.push_back(obj);
-                            }
-                            obj->clicked();
-
-                            
-                        }
                         
                     }
+                    
+                }
+                for( int j = 0; j < minN; j++ )
+                    
+                {
+                    
+                    int item = PickBuffer[minIndex++];
+                    
+                    Object* obj = clickList[item];
+                    //                            Object::clickedList.push_back(obj);
+                    while (obj->parent!=nullptr)
+                    {
+                        obj->clicked();
+//                        obj->color = Vector3(1,0,0);
+                        obj = obj->parent;
+                        //                                Object::clickedList.push_back(obj);
+                    }
+//                    obj->color = Vector3(1,0,0);
+                    obj->clicked();
+                        
+                    
                     
                 }
                 

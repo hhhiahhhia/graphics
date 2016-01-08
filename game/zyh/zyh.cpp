@@ -15,6 +15,7 @@
 #include "mainlight.hpp"
 #include "exporter.hpp"
 #include "../../basicobject/monkey.hpp"
+#include "../../basicobject/lamp.hpp"
 void zyhPart(std::vector<Object*>* objectList)
 {
     Triangle *t2 = new Triangle;
@@ -48,12 +49,18 @@ void zyhPart(std::vector<Object*>* objectList)
     Exporter *exp = new Exporter;
     objectList->push_back(exp);
     
+
+    lamp *la = new lamp;
+    la->location = Vector3(50,10,-30);
+    la->size = Vector3(0.3,0.3,0.3);
+    la->color = Vector3(0.5,0.5,0.5);
+    objectList->push_back(la);
+
     monkey *m = new monkey;
-    m->location = Vector3(50,10,-50);
-    m->size = Vector3(10,10,10);
+    m->location = Vector3(50,10,-10);
+    m->size = Vector3(0.3,0.3,0.3);
     m->color = Vector3(0.5,0.5,0.5);
     objectList->push_back(m);
-    
     
     
     

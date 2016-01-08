@@ -1,4 +1,6 @@
 #include "../object.hpp"
-class monkey: public Object {
-	 virtual void draw();
+#include "importedobj.hpp"
+class monkey: public  ImportedObj{
+public:
+    monkey():ImportedObj("monkey.obj"){};
 };
