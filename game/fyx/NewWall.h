@@ -2,15 +2,14 @@
 #define NewWall_h
 
 #include <stdio.h>
-#include "../../object.hpp"
+#include "../../basicobject/cube.hpp"
 
-class NewWall:public Object
+class NewWall:public Cube
 {
   public:
-     virtual void draw();
      NewWall(){
      	useTexture = true;
-        texture = LoadTexture("wall6.bmp", 512 , 512);
+        texture = LoadTexture("wall11.bmp", 512 , 512);
      }
 };
 
