@@ -16,6 +16,21 @@ bool Object::keyDown[256],Object::mouseClicked,Object::mouseClickedRight;
 double Object::keyLoc[256][2];
 double Object::mouseX,Object::mouseY;
 std::vector<Object*> Object::clickedList;
+Object::Object()
+{
+    visible = true;
+    parent = nullptr;
+    isLight = false;
+    isCamera = false;
+    useTexture = false;
+    disableTexture = false;
+    location = Vector3(0.0,0.0,0.0);
+    rotate = Vector3(0.0,0.0,0.0);
+    size = Vector3(1.0,1.0,1.0);
+    color = Vector3(-1,-1,-1);
+    highLightColor = Vector3(0,0,0);
+    
+}
 void Object::upKey(unsigned char key,int x,int y)
 {
     keyDown[key] = false;

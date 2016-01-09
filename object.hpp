@@ -60,21 +60,8 @@ public:
         children.push_back(newObject);
         newObject->parent = this;
     }
-    Object()
-    {
-        visible = true;
-		parent = nullptr;
-        isLight = false;
-        isCamera = false;
-        useTexture = false;
-        disableTexture = false;
-		location = Vector3(0.0,0.0,0.0);
-		rotate = Vector3(0.0,0.0,0.0);
-        size = Vector3(1.0,1.0,1.0);
-        color = Vector3(-1,-1,-1);
-        highLightColor = Vector3(0,0,0);
-        
-    }
+    Object();
+    
     static bool keyDown[256],mouseClicked,mouseClickedRight;
     static double keyLoc[256][2];
     static double mouseX,mouseY;
