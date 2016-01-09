@@ -29,6 +29,7 @@ Object::Object()
     rotate = Vector3(0.0,0.0,0.0);
     size = Vector3(1.0,1.0,1.0);
     color = Vector3(-1,-1,-1);
+    emission = Vector3(-1,-1,-1);
     highLightColor = Vector3(0,0,0);
 }
 void Object::upKey(unsigned char key,int x,int y)

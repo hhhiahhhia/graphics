@@ -18,8 +18,8 @@ public:
     Camera()
     {
         isCamera = true;
-        location = Vector3(50.0,10.0,-1.0);
-        center = Vector3(50.0,10.0,-10.0);
+        location = Vector3(50.0,10.0,-11.0);
+        center = Vector3(50.0,10.0,-20.0);
     }
 };
 

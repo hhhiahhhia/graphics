@@ -55,32 +55,41 @@ void Player::script()
     preMouseX = mouseX;
     preMouseY = mouseY;
     double fDistance = 0.1;
+    Vector3 newLoc = camera->location;
+    Vector3 newCen = camera->center;
     if (keyPushed('a'))
     {
-        camera->location.x+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
-        camera->center.x+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
-        camera->location.z-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
-        camera->center.z-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        newLoc.x+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        newCen.x+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        newLoc.z-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        newCen.z-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
     }
     if (keyPushed('d'))
     {
-        camera->location.x-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
-        camera->center.x-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
-        camera->location.z+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
-        camera->center.z+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        newLoc.x-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        newCen.x-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        newLoc.z+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        newCen.z+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
     }
     if (keyPushed('w'))
     {
-        camera->location.z+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
-        camera->center.z+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
-        camera->location.x+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
-        camera->center.x+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        newLoc.z+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        newCen.z+=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        newLoc.x+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        newCen.x+=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
     }
     if (keyPushed('s'))
     {
-        camera->location.z-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
-        camera->center.z-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
-        camera->location.x-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
-        camera->center.x-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        newLoc.z-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        newCen.z-=fDistance * cos(tVerticalAng) * sin(tHorizonAng);
+        newLoc.x-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
+        newCen.x-=fDistance * cos(tVerticalAng) * cos(tHorizonAng);
     }
+    if (newLoc.x<98 && newLoc.x>2&& newLoc.z>-98&& newLoc.z<-2)
+    {
+        camera->location = newLoc;
+        camera->center = newCen;
+    }
+
+    
 }

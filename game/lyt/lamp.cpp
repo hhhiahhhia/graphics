@@ -10,9 +10,11 @@
 #include "../../basicobject/cylinder.h"
 #include "bulb.h"
 #include "button.h"
+#include <string>
 
 SuperLamp::SuperLamp(DoorButton* _db){
     ifChoosed=0;
+    choosedFlag = 0;
     db=_db;
     size = Vector3(0.15,0.15,0.15);
 //    Cylinder * cover = new Cylinder(1,2,3,false,false);
@@ -55,6 +57,7 @@ SuperLamp::SuperLamp(DoorButton* _db){
 
 void SuperLamp::script(){
     if(ifChoosed){
+        mainText->text = string("use i j k l to move the lamp");
         if(keyPushed('j')){
             if (location.z<=10.5) {
                 location.z+=0.1;
@@ -76,10 +79,16 @@ void SuperLamp::script(){
                 location.x+=0.1;
             }
         }
-        if (location.x>=0.9 && location.z<=-0.4 && mybulb->openFlag==true) {
-            db->showFlag=true;
-        }else{
-            db->showFlag=false;
-        }
+    }
+    else
+    {
+        if (choosedFlag)
+            mainText->text = "...";
+    }
+    
+    if (location.x>=0.9 && location.z<=-0.4 && mybulb->openFlag==true) {
+        db->showFlag=true;
+    }else{
+        db->showFlag=false;
     }
 }

@@ -24,7 +24,7 @@ public:
 class DoorPart:public Object{
 public:
     DoorPart();
-    bool ifOpen;
+    bool ifOpen,ifClose;
     virtual void script();
 };
 

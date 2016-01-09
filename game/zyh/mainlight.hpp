@@ -16,6 +16,7 @@ class MainLight:public PointLight
 private:
     bool openFlag;
 public:
+    Object* theLamp;
     MainLight(Vector3 v3):PointLight(v3)
     {
         openFlag = false;

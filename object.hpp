@@ -33,6 +33,7 @@ public:
     Vector3 size;
     Vector3 color;
     Vector3 highLightColor;
+    Vector3 emission;
     GLint texture;
     bool isCamera;
     bool isLight;

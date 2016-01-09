@@ -10,6 +10,14 @@
 #include <ctime>
 void MainLight::script()
 {
+    if (!open)
+    {
+        theLamp->emission = Vector3(1,0,0);
+    }
+    else
+    {
+        theLamp->emission = Vector3(-1,-1,-1);
+    }
     if (keyPushed('0'))
     {
         openFlag = true;

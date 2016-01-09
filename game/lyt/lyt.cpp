@@ -13,6 +13,8 @@
 #include "door.h"
 #include "doorButton.h"
 #include "../../basicobject/cylinder.h"
+#include "../../basicobject/text.hpp"
+#include "../zyh/mainLight.hpp"
 
 void lytPart(std::vector<Object*>* objectList)
 {
@@ -30,8 +32,11 @@ void lytPart(std::vector<Object*>* objectList)
     DoorButton * doorbtn=new DoorButton(door);
     doorbtn->location=Vector3(6.5,0,-8);
     t1->addChild(doorbtn);
-   
     SuperLamp * lamp=new SuperLamp(doorbtn);
+    extern MainLight* mainLight;
+    extern Text* mainText;
+    mainLight->theLamp = lamp;
+    lamp->mainText = mainText;
     lamp->location.x =-1;
     lamp->location.y =4;
     lamp->location.z =8;

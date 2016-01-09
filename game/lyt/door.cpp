@@ -9,23 +9,24 @@
 #include <stdio.h>
 #include "door.h"
 #include "../../basicobject/cube.hpp"
+#include "../../basicobject/doorobj.hpp"
 extern Player* player;
 
 DoorBorder::DoorBorder(){
     Cube * top = new Cube();
     top->size=Vector3(11,1,1.5);
-    top->location=Vector3(0,11,0);
+    top->location=Vector3(0,12.5,0);
     top->color=Vector3(0.501,0.2,0);
     addChild(top);
     
     Cube * l = new Cube();
-    l->size=Vector3(1,21,1.5);
+    l->size=Vector3(1,24,1.5);
     l->location=Vector3(-5,0,0);
     l->color=Vector3(0.501,0.2,0);
     addChild(l);
     
     Cube * r = new Cube();
-    r->size=Vector3(1,21,1.5);
+    r->size=Vector3(1,24,1.5);
     r->location=Vector3(5,0,0);
     r->color=Vector3(0.501,0.2,0);
     addChild(r);
@@ -33,10 +34,10 @@ DoorBorder::DoorBorder(){
 
 DoorPart::DoorPart(){
     ifOpen=false;
-    
-    Cube * cont = new Cube();
-    cont->size=Vector3(9,21,1);
-    cont->location=Vector3(4,0,0);
+    ifClose = true;
+    DoorObj * cont = new DoorObj();
+    cont->size=Vector3(1,1,1);
+    cont->location=Vector3(5.8,-6.9,0);
     addChild(cont);
     useTexture = true;
 //    color = Vector3(1,1,1);
@@ -46,10 +47,15 @@ DoorPart::DoorPart(){
 
 void DoorPart::script(){
     if(ifOpen){
-        if(rotate.y>=-150){
+        if(rotate.y>=-120){
             rotate.y-=1;
         }
     }
+//    if (ifClose){
+//        if (rotate.y<=0) {
+//            rotate.y+=1;
+//        }
+//    }
 }
 
 Door::Door(){
@@ -68,7 +74,7 @@ Door::Door(){
     
     Cube * out = new Cube();
     out->color=Vector3(1,1,1);
-    out->size=Vector3(9,21,0.4);
+    out->size=Vector3(9,24,0.4);
     out->location=Vector3(0,0,-0.7);
     addChild(out);
 }
@@ -80,10 +86,13 @@ void Door::script(){
         showFlag=false;
         firstFlag=false;
     }
+
+    
 }
 
 void Door::clicked(){
     if (player->hasKey) {
-        rd->ifOpen=true;
+        rd->ifOpen=1-rd->ifOpen;
+        rd->ifClose = 1-rd->ifClose;
     }
 }

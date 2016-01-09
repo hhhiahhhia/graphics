@@ -75,7 +75,7 @@ void initFunction()
 
 void glutIdleFunction()
 {
-    // for (int i=0;i<10000000;i++);
+//    for (int i=0;i<10000000;i++);
     glutPostWindowRedisplay(iWindowHandle);
 }
 
@@ -151,7 +151,7 @@ void glutKeyboardFunction(unsigned char k,int x,int y)
     }
 }
 
-void drawObject(Object* obj,Vector3 defaultColor)
+void drawObject(Object* obj,Vector3 defaultColor,Vector3 defaultEmission)
 {
     static Object* texObj;
     glPushMatrix();
@@ -163,11 +163,16 @@ void drawObject(Object* obj,Vector3 defaultColor)
     {
         defaultColor = obj->color;
     }
+    if (obj->emission.x != -1)
+    {
+        defaultEmission = obj->emission;
+    }
 //    if (obj->isLight == false)
     {
         float ambient[4];
         float diffuse[4];
         float specular[4];
+        float emission[4];
         // color part
         
         
@@ -183,13 +188,15 @@ void drawObject(Object* obj,Vector3 defaultColor)
         specular[1] = obj->highLightColor.y;
         specular[2] = obj->highLightColor.z;
         specular[3] = 1.0f;
-        
+        emission[0] = defaultEmission.x;
+        emission[1] = defaultEmission.y;
+        emission[2] = defaultEmission.z;
         //        GLfloat emission[] = {0.0f, 0.0f, 0.0f, 1.0f};
         GLfloat shininess  = 40.0f;
         glMaterialfv(GL_FRONT, GL_AMBIENT,   ambient);
         glMaterialfv(GL_FRONT, GL_DIFFUSE,   diffuse);
         glMaterialfv(GL_FRONT, GL_SPECULAR,  specular);
-        //        glMaterialfv(GL_FRONT, GL_EMISSION,  emission);
+        glMaterialfv(GL_FRONT, GL_EMISSION,  emission);
         glMaterialf (GL_FRONT, GL_SHININESS, shininess);
         glColor3f(defaultColor.x, defaultColor.y, defaultColor.z);
     }
@@ -296,7 +303,7 @@ void drawObject(Object* obj,Vector3 defaultColor)
     
     for (int i = 0;i<int(obj->children.size());i++)
     {
-        drawObject(obj->children[i],defaultColor);
+        drawObject(obj->children[i],defaultColor,defaultEmission);
     }
     obj->closeShader();
     glPopAttrib();
@@ -358,7 +365,7 @@ void glutDisplayFunction()
     {
         if (objectList[i]->parent == nullptr)
         {
-            drawObject(objectList[i],Vector3(0.7,0.7,0.7));
+            drawObject(objectList[i],Vector3(0.7,0.7,0.7),Vector3(0,0,0));
         }
         
     }
