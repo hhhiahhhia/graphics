@@ -20,8 +20,8 @@ public:
     Bulb(Vector3 v3):PointLight(v3)
     {
         disableTexture = true;
-        openFlag = true;
-        open=true;
+        openFlag = false;
+        open=false;
         color = v3;
     }
     virtual void script();

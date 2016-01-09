@@ -12,16 +12,19 @@
 #include <stdio.h>
 #include "../../object.hpp"
 #include "../../basicobject/lamp.hpp"
+#include "doorButton.h"
 #include "bulb.h"
 class SuperLamp:public Lamp{
 private:
     bool ifChoosed=0;
 public:
-    SuperLamp();
+    SuperLamp(DoorButton * _db);
+    DoorButton * db;
+    Bulb * mybulb;
     virtual void script();
     virtual void clicked(){
         ifChoosed = 1 - ifChoosed;
-        printf("lamp clicked!:%d",ifChoosed);
+        printf("lamp clicked!:%d\n",ifChoosed);
     };
 };
 

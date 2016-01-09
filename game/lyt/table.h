@@ -12,7 +12,15 @@
 #include <stdio.h>
 
 #include "../../object.hpp"
+#include "../../basicobject/cube.hpp"
 
+class TableFace:public Cube{
+public:
+    TableFace(){
+        useTexture = true;
+        texture = LoadTexture("desk.bmp", 1002 , 950);
+    }
+};
 
 class Table:public Object{
 public:

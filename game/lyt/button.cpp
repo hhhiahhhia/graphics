@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 void Button::clicked(){
-    printf("Push button!");
+    printf("Push button!\n");
     ifPushed = 1 - ifPushed;
     bulb->openFlag=ifPushed;
 }

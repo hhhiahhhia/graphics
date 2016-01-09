@@ -17,7 +17,7 @@ Table::Table(float x,float y,float z,float locationy){
     float offy=locationy/2;
     float offz=(z-0.5-legz)/2;
     
-    Cube * c1=new Cube();
+    TableFace * c1=new TableFace();
     c1->location.x =0;
     c1->location.y =0;
     c1->location.z =0;
@@ -29,6 +29,7 @@ Table::Table(float x,float y,float z,float locationy){
     c2->location.y =-offy;
     c2->location.z =offz;
     c2->size = Vector3(legx,legy,legz);
+    c2->color=Vector3(0,0,0);
     addChild(c2);
     
     Cube * c3=new Cube();
@@ -36,6 +37,7 @@ Table::Table(float x,float y,float z,float locationy){
     c3->location.y =-offy;
     c3->location.z =offz;
     c3->size = Vector3(legx,legy,legz);
+    c3->color=Vector3(0,0,0);
     addChild(c3);
     
     Cube * c4=new Cube();
@@ -43,6 +45,7 @@ Table::Table(float x,float y,float z,float locationy){
     c4->location.y =-offy;
     c4->location.z =-offz;
     c4->size = Vector3(legx,legy,legz);
+    c4->color=Vector3(0,0,0);
     addChild(c4);
     
     Cube * c5=new Cube();
@@ -50,6 +53,7 @@ Table::Table(float x,float y,float z,float locationy){
     c5->location.y =-offy;
     c5->location.z =-offz;
     c5->size = Vector3(legx,legy,legz);
+    c5->color=Vector3(0,0,0);
     addChild(c5);
     
 

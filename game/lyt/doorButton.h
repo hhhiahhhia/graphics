@@ -17,21 +17,12 @@
 
 class DoorButton:public Object{
 public:
-    DoorButton(Door * _door){
-        door=_door;
-        ifPushed=false;
-        Cube * bot = new Cube();
-        bot->size=Vector3(3,1,3);
-        bot->location=Vector3(0,0,0);
-        addChild(bot);
-        
-        Cylinder * btn = new Cylinder(0.2, 0.2, 0.2, true, true);
-        btn->location=Vector3(0,1,0);
-        addChild(btn);
-    };
+    DoorButton(Door * _door);
     Door* door;
     bool ifPushed;
+    bool showFlag;
     virtual void clicked();
+    virtual void script();
 };
 
 #endif /* defined(__graphics__doorButton__) */

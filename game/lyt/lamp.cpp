@@ -11,8 +11,9 @@
 #include "bulb.h"
 #include "button.h"
 
-SuperLamp::SuperLamp(){
+SuperLamp::SuperLamp(DoorButton* _db){
     ifChoosed=0;
+    db=_db;
     size = Vector3(0.15,0.15,0.15);
 //    Cylinder * cover = new Cylinder(1,2,3,false,false);
 //    cover->location.x=0;
@@ -25,8 +26,8 @@ SuperLamp::SuperLamp(){
     bulb->angle=70;
     bulb->direction = Vector3(0,-1,0);
     bulb->size = Vector3(2,2,2);
-//    bulb->ambient = Vector3(0.4,0.4,0.4);
     addChild(bulb);
+    mybulb=bulb;
 //
 //    Cylinder * pillar = new Cylinder(0.2,0.2,5,true,true);
 //    pillar->location.x=0;
@@ -55,16 +56,30 @@ SuperLamp::SuperLamp(){
 void SuperLamp::script(){
     if(ifChoosed){
         if(keyPushed('j')){
-            location.z+=0.1;
+            if (location.z<=10.5) {
+                location.z+=0.1;
+            }
         }
         if(keyPushed('l')){
-            location.z-=0.1;
+            if(location.z>=-7.5){
+                location.z-=0.1;
+            }
         }
         if(keyPushed('i')){
-            location.x-=0.1;
+            if (location.x>=-6.5) {
+                location.x-=0.1;
+            }
+            
         }
         if(keyPushed('k')){
-            location.x+=0.1;
+            if (location.x<=6.5) {
+                location.x+=0.1;
+            }
+        }
+        if (location.x>=0.9 && location.z<=-0.4 && mybulb->openFlag==true) {
+            db->showFlag=true;
+        }else{
+            db->showFlag=false;
         }
     }
 }

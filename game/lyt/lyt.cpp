@@ -20,20 +20,22 @@ void lytPart(std::vector<Object*>* objectList)
     t1->location.x=12;
     t1->location.y=6;
     t1->location.z=-40;
-   
-    SuperLamp * lamp=new SuperLamp();
-    lamp->location.x =0;
-    lamp->location.y =4;
-    lamp->location.z =0;
-    t1->addChild(lamp);
     
     Door * door=new Door();
-    door->location=Vector3(0,0,-50);
+    //-100=>-98.4
+    door->location=Vector3(50,7.5,-100);
     objectList->push_back(door);
     
+    //0=>0.3
     DoorButton * doorbtn=new DoorButton(door);
-    doorbtn->location=Vector3(0,2,0);
+    doorbtn->location=Vector3(6.5,0,-8);
     t1->addChild(doorbtn);
+   
+    SuperLamp * lamp=new SuperLamp(doorbtn);
+    lamp->location.x =-1;
+    lamp->location.y =4;
+    lamp->location.z =8;
+    t1->addChild(lamp);
     
     objectList->push_back(t1);
 

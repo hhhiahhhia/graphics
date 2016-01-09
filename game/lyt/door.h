@@ -14,11 +14,27 @@
 #include "../../basicobject/cube.hpp"
 #include "../zyh/player.hpp"
 
+
+class DoorBorder:public Object{
+public:
+    DoorBorder();
+    
+};
+
+class DoorPart:public Object{
+public:
+    DoorPart();
+    bool ifOpen;
+    virtual void script();
+};
+
+
 class Door:public Object{
 public:
     Door();
-    Cube * realdoor;
+    DoorPart * rd;
     bool ifChoosed;
+    bool firstFlag;
     bool showFlag;
     virtual void clicked();
     virtual void script();
