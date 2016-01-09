@@ -16,6 +16,7 @@
 #include "exporter.hpp"
 #include "../../basicobject/monkey.hpp"
 #include "../../basicobject/lamp.hpp"
+Player *player;
 void zyhPart(std::vector<Object*>* objectList)
 {
     Triangle *t2 = new Triangle;
@@ -32,7 +33,7 @@ void zyhPart(std::vector<Object*>* objectList)
     RotatingTriangle* rt1 = new RotatingTriangle;
     rt1->location = Vector3(70,10,-50);
     objectList->push_back(rt1);
-    Player *player = new Player;
+    player = new Player;
     player->camera = dynamic_cast<Camera*>((*objectList)[0]);
     objectList->push_back(player);
     
@@ -50,10 +51,10 @@ void zyhPart(std::vector<Object*>* objectList)
     objectList->push_back(exp);
     
 
-    Lamp *la = new Lamp(new LampButton);
-    la->location = Vector3(10,10,-30);
-    la->size = Vector3(0.15,0.15,0.15);
-    objectList->push_back(la);
+//    Lamp *la = new Lamp(new LampButton);
+//    la->location = Vector3(10,10,-30);
+//    la->size = Vector3(0.15,0.15,0.15);
+//    objectList->push_back(la);
 
     monkey *m = new monkey;
     m->location = Vector3(50,10,-10);

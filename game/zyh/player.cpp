@@ -19,6 +19,7 @@ Player::Player()
     tRadius = 400.0;
     preMouseX = 0;
     preMouseY = 0;
+    hasKey=false;
 }
 void Player::script()
 {

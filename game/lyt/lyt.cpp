@@ -10,6 +10,8 @@
 #include "cone.h"
 #include "table.h"
 #include "lamp.h"
+#include "door.h"
+#include "doorButton.h"
 #include "../../basicobject/cylinder.h"
 
 void lytPart(std::vector<Object*>* objectList)
@@ -23,16 +25,16 @@ void lytPart(std::vector<Object*>* objectList)
     lamp->location.x =0;
     lamp->location.y =4;
     lamp->location.z =0;
-    
     t1->addChild(lamp);
     
-    objectList->push_back(t1);
+    Door * door=new Door();
+    door->location=Vector3(0,0,-50);
+    objectList->push_back(door);
     
-//    Cylinder * cover = new Cylinder(5.0,10.0,10.0,false,false);
-//    Cone * cover = new Cone();
-//    cover->location.x=12;
-//    cover->location.y=6;
-//    cover->location.z=-50;
-//    objectList->push_back(cover);
+    DoorButton * doorbtn=new DoorButton(door);
+    doorbtn->location=Vector3(0,2,0);
+    t1->addChild(doorbtn);
+    
+    objectList->push_back(t1);
 
 }

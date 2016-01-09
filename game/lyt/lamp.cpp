@@ -55,16 +55,16 @@ SuperLamp::SuperLamp(){
 void SuperLamp::script(){
     if(ifChoosed){
         if(keyPushed('j')){
-            location.z+=1;
+            location.z+=0.1;
         }
         if(keyPushed('l')){
-            location.z-=1;
+            location.z-=0.1;
         }
         if(keyPushed('i')){
-            location.x-=1;
+            location.x-=0.1;
         }
         if(keyPushed('k')){
-            location.x+=1;
+            location.x+=0.1;
         }
     }
 }

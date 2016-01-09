@@ -14,6 +14,7 @@
 class Player:public Object
 {
 public:
+    bool hasKey;
     double PI;
     double tVerticalAng, tHorizonAng, tRadius, tAngInc;
     double preMouseX,preMouseY;

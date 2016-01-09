@@ -20,7 +20,7 @@ public:
     RotatingTriangle()
     {
         useTexture = true;
-        texture = LoadTexture("monet.bmp", 512 , 512);
+//        texture = LoadTexture("monet.bmp", 512 , 512);
     }
     virtual void clicked()
     {
