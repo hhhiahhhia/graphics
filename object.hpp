@@ -61,10 +61,6 @@ public:
         newObject->parent = this;
     }
     Object();
-<<<<<<< HEAD
-    
-=======
->>>>>>> 42ac21d1efcce89c9d8ec2e263c13a188c275edd
     static bool keyDown[256],mouseClicked,mouseClickedRight;
     static double keyLoc[256][2];
     static double mouseX,mouseY;
