@@ -19,8 +19,10 @@ public:
     bool openFlag;
     Bulb(Vector3 v3):PointLight(v3)
     {
+        disableTexture = true;
         openFlag = true;
         open=true;
+        color = v3;
     }
     virtual void script();
     virtual void draw();

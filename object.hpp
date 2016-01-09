@@ -72,6 +72,7 @@ public:
         isCamera = false;
         isLight = false;
         useTexture = false;
+        disableTexture = false;
     }
     static bool keyDown[256],mouseClicked,mouseClickedRight;
     static double keyLoc[256][2];

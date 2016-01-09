@@ -11,11 +11,11 @@
 
 #include <stdio.h>
 #include "bulb.h"
-#include "../../basicobject/cylinder.h"
+#include "../../basicobject/lamp.hpp"
 
-class Button:public Cylinder{
+class Button:public LampButton{
 public:
-    Button():Cylinder(2,2,3,true,true){
+    Button(){
         ifPushed=false;
     }
     Bulb* bulb;

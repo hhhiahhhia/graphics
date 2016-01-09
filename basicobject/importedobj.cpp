@@ -52,7 +52,7 @@ ImportedObj::ImportedObj(string filename)
                     {
                         for (int i=0;i<3;i++)
                         {
-                            int x,y,z;
+                            int x = 0,y = 0,z =0;
                             int yf=0,zf=0;
                             string s;
                             stringstream ss;
@@ -100,6 +100,7 @@ ImportedObj::ImportedObj(string filename)
                             {
                                 rvt.push_back(vt[y].x);
                                 rvt.push_back(vt[y].y);
+//                                rvt.push_back(0);
                                 vtFlag = true;
                             }
                             rv.push_back(v[x].x);
@@ -149,12 +150,12 @@ void ImportedObj::draw()
         glNormalPointer(GL_FLOAT, 0,rvn);
 
     }
-//    if (vtFlag)
-//    {
-//        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-//        glTexCoordPointer(2, GL_FIXED_ONLY_ARB, 0, rvt);
-//        
-//    }
+    if (vtFlag)
+    {
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glTexCoordPointer(2, GL_FLOAT, 0, rvt);
+        
+    }
     //    glutSolidCube(1);
     glBegin(GL_TRIANGLES);
     for (int i=0;i<vsize/3;i++)
@@ -162,6 +163,7 @@ void ImportedObj::draw()
 //        if (i % 3 ==0 )
         
         glArrayElement(i);
+//        glTexCoord2f(rvt[i*2], rvt[i*2+1]);
 //        glNormal3f(rvn[i*3], rvn[i*3+1], rvn[i*3+2]);
 //        glVertex3f(rv[i*3],rv[i*3+1],rv[i*3+2]);
 //        if (i% 3 ==2)

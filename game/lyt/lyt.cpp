@@ -19,9 +19,9 @@ void lytPart(std::vector<Object*>* objectList)
     t1->location.y=6;
     t1->location.z=-40;
    
-    Lamp * lamp=new Lamp();
+    SuperLamp * lamp=new SuperLamp();
     lamp->location.x =0;
-    lamp->location.y =7;
+    lamp->location.y =4;
     lamp->location.z =0;
     
     t1->addChild(lamp);

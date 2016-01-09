@@ -152,6 +152,7 @@ void glutKeyboardFunction(unsigned char k,int x,int y)
 
 void drawObject(Object* obj,Vector3 defaultColor)
 {
+    static Object* texObj;
     glPushMatrix();
     if (obj->location.x == 50)
     {
@@ -161,7 +162,7 @@ void drawObject(Object* obj,Vector3 defaultColor)
     {
         defaultColor = obj->color;
     }
-    if (obj->isLight == false)
+//    if (obj->isLight == false)
     {
         float ambient[4];
         float diffuse[4];
@@ -253,10 +254,19 @@ void drawObject(Object* obj,Vector3 defaultColor)
         if (obj->useTexture)
         {
             obj->shader();
+            texObj = obj;
+        }
+        if (obj->disableTexture)
+        {
+            texObj->closeShader();
         }
         glPushName( clickList.size() );
         clickList.push_back(obj);
         obj->draw();
+        if (obj->disableTexture)
+        {
+            texObj->shader();
+        }
         glPopName();
     }
     

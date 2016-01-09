@@ -50,10 +50,9 @@ void zyhPart(std::vector<Object*>* objectList)
     objectList->push_back(exp);
     
 
-    lamp *la = new lamp;
+    Lamp *la = new Lamp(new LampButton);
     la->location = Vector3(10,10,-30);
     la->size = Vector3(0.15,0.15,0.15);
-    la->color = Vector3(0.5,0.5,0.5);
     objectList->push_back(la);
 
     monkey *m = new monkey;

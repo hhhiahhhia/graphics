@@ -11,12 +11,13 @@
 
 #include <stdio.h>
 #include "../../object.hpp"
+#include "../../basicobject/lamp.hpp"
 #include "bulb.h"
-class Lamp:public Object{
+class SuperLamp:public Lamp{
 private:
     bool ifChoosed=0;
 public:
-    Lamp();
+    SuperLamp();
     virtual void script();
     virtual void clicked(){
         ifChoosed = 1 - ifChoosed;
