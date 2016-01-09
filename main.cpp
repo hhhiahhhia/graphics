@@ -8,6 +8,7 @@
 #include "object.hpp"
 #include "basicobject/camera.hpp"
 #include "basicobject/light.hpp"
+#include "basicobject/canvas.hpp"
 
 #define PICK_TOL 5
 #define PICK_BUFFER_SIZE 256
@@ -92,7 +93,7 @@ void updateViewFunction(GLsizei width,GLsizei height)
     }
     else
     {
-        glOrtho(-3.0,3.0,-3.0,3.0,-100.0,100.0);
+        gluOrtho2D(0,200,0,100);
     }
     glMatrixMode(GL_MODELVIEW); // select model-view matrix
     glLoadIdentity(); // set model-view matrix
@@ -262,6 +263,29 @@ void drawObject(Object* obj,Vector3 defaultColor)
         }
         glPushName( clickList.size() );
         clickList.push_back(obj);
+        if (dynamic_cast<Canvas*>(obj)){
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            
+            bPersp =0;
+            updateViewFunction(iWidth,iHeight);
+            glMatrixMode(GL_MODELVIEW);
+            glLoadIdentity();
+            glColor3f(obj->color.x,obj->color.y,obj->color.z);
+            glTranslated(obj->location.x,obj->location.y,0);
+            glScaled(obj->size.x, obj->size.y, 1);
+            obj->draw();
+//            glBegin(GL_TRIANGLES);
+//            glColor3f(255, 0, 0);
+//            glVertex2f(-1, 0);
+//            glVertex2f(-1, -1);
+//            glVertex2f(0, -1);
+//            glEnd();
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            bPersp =1;
+            updateViewFunction(iWidth,iHeight);
+        }
         obj->draw();
         if (obj->disableTexture)
         {

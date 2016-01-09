@@ -16,6 +16,8 @@
 #include "exporter.hpp"
 #include "../../basicobject/monkey.hpp"
 #include "../../basicobject/lamp.hpp"
+#include "../../basicobject/text.hpp"
+
 Player *player;
 void zyhPart(std::vector<Object*>* objectList)
 {
@@ -62,6 +64,10 @@ void zyhPart(std::vector<Object*>* objectList)
     m->color = Vector3(0.5,0.5,0.5);
     objectList->push_back(m);
     
+    Text *text = new Text("hahahah");
+    text->location = Vector3(100,90,0);
+    text->size = Vector3(1,1,1);
+    objectList->push_back(text);
     
     
     
