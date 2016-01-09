@@ -10,7 +10,8 @@
 #define canvas_hpp
 
 #include <stdio.h>
-class Canvas
+#include "../object.hpp"
+class Canvas: public Object
 {
     
 };
