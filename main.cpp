@@ -263,7 +263,7 @@ void drawObject(Object* obj,Vector3 defaultColor)
         }
         glPushName( clickList.size() );
         clickList.push_back(obj);
-        if (dynamic_cast<Canvas*>(obj)){
+        if (dynamic_cast<Canvas*>(obj) && RenderMode == GL_RENDER){
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
             

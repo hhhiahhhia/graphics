@@ -38,9 +38,9 @@ DoorPart::DoorPart(){
     cont->size=Vector3(9,21,1);
     cont->location=Vector3(4,0,0);
     addChild(cont);
-    
     useTexture = true;
-    texture = LoadTexture("door.bmp", 512 , 512);
+//    color = Vector3(1,1,1);
+    texture = LoadTexture("door2.bmp", 650 , 406);
     
 }
 
