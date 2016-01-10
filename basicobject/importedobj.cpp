@@ -137,8 +137,6 @@ ImportedObj::ImportedObj(string filename)
         
     }
 
-    glTexCoordPointer(2, GL_FIXED_ONLY_ARB, 0, &rvt);
-
 }
 void ImportedObj::draw()
 {
