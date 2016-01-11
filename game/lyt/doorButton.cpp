@@ -17,7 +17,7 @@ DoorButton::DoorButton(Door * _door){
     bot->location=Vector3(0,0,0);
     addChild(bot);
     
-    Cylinder * btn = new Cylinder(0.15, 0.15, 0.2, true, true);
+    btn = new Cylinder(0.15, 0.15, 0.2, true, true);
     btn->location=Vector3(0,0.35,0);
     addChild(btn);
 };
@@ -38,5 +38,6 @@ void DoorButton::script(){
 void DoorButton::clicked(){
 //    ifPushed=1-ifPushed;
     ifPushed=true;
+    btn->location = Vector3(0,.3,0);
     door->showFlag=true;
 }

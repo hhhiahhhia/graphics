@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "../../object.hpp"
 #include "../../basicobject/cube.hpp"
+#include "../../basicobject/text.hpp"
 #include "../zyh/player.hpp"
 
 
@@ -33,6 +34,7 @@ class Door:public Object{
 public:
     Door();
     DoorPart * rd;
+    Text* mainText;
     bool ifChoosed;
     bool firstFlag;
     bool showFlag;

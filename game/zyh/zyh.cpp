@@ -17,6 +17,7 @@
 #include "../../basicobject/monkey.hpp"
 #include "../../basicobject/lamp.hpp"
 #include "../../basicobject/text.hpp"
+#include "../../basicobject/decorations.hpp"
 
 Player *player;
 MainLight *mainLight;
@@ -59,11 +60,19 @@ void zyhPart(std::vector<Object*>* objectList)
 //    la->location = Vector3(10,10,-30);
 //    la->size = Vector3(0.15,0.15,0.15);
 //    objectList->push_back(la);
-
+    BigLamp *big = new BigLamp;
+    big->location = Vector3(10,10,-70);
+    big->size = Vector3(2,2,2);
+    objectList->push_back(big);
+    Sofa *sofa = new Sofa;
+    sofa->location = Vector3(40,2,-40);
+    sofa->size = Vector3(10,10,10);
+    sofa->rotate = Vector3(0,180,0);
+    objectList->push_back(sofa);
     monkey *m = new monkey;
-    m->location = Vector3(50,10,-10);
-    m->size = Vector3(0.3,0.3,0.3);
-    m->color = Vector3(0.5,0.5,0.5);
+    m->location = Vector3(50,30,-97);
+    m->size = Vector3(3,3,3);
+    m->color = Vector3(0.8,0.498039,0.196078);
     objectList->push_back(m);
     
     Text *text = new Text("push 0 to close or open the light");

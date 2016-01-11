@@ -19,7 +19,7 @@ Player::Player()
     tRadius = 400.0;
     preMouseX = 0;
     preMouseY = 0;
-    hasKey=true;
+    hasKey=false;
 }
 void Player::script()
 {
@@ -87,8 +87,12 @@ void Player::script()
     }
     if (newLoc.x<98 && newLoc.x>2&& newLoc.z>-98&& newLoc.z<-2)
     {
-        camera->location = newLoc;
-        camera->center = newCen;
+        if (!(newLoc.x>75  && newLoc.z<-75))
+        {
+            camera->location = newLoc;
+            camera->center = newCen;
+        }
+        
     }
 
     

@@ -4,13 +4,10 @@
 #include <stdio.h>
 #include "../../object.hpp"
 
-class drawQuadrangle:public Object
+class Quadrangle:public Object
 {
 public:
   virtual void draw();
-    drawQuadrangle()
-    {
-    }
 };
 
 #endif

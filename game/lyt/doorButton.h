@@ -17,6 +17,7 @@
 
 class DoorButton:public Object{
 public:
+    Cylinder * btn;
     DoorButton(Door * _door);
     Door* door;
     bool ifPushed;

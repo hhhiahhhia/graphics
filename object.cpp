@@ -47,9 +47,9 @@ bool Object::keyPushed(unsigned char key)
     return keyDown[key];
 }
 void addObject(std::vector<Object*>* objectList)
-{
-    ltyPart(objectList);
+{    
     zyhPart(objectList);
+    ltyPart(objectList);
     lytPart(objectList);
     xftPart(objectList);
     fyxPart(objectList);

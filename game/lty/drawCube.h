@@ -3,14 +3,14 @@
 
 #include <stdio.h>
 #include "../../object.hpp"
+#include "../../basicobject/cube.hpp"
 
-class drawCube:public Object
+class drawCube:public Cube
 {
 public:
-  virtual void draw();
   drawCube()
   {
-	size=Vector3(2.0,2.0,2.0);
+	size=Vector3(1.0,1.0,1.0);
   }
 };
 

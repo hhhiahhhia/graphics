@@ -92,7 +92,8 @@ void Door::script(){
 
 void Door::clicked(){
     if (player->hasKey) {
-        rd->ifOpen=1-rd->ifOpen;
+        mainText->text = "WIN!!!WIN!!!WIN!!!!";
+        rd->ifOpen=1;
         rd->ifClose = 1-rd->ifClose;
     }
 }

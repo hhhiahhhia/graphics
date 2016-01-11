@@ -56,8 +56,13 @@ SuperLamp::SuperLamp(DoorButton* _db){
 
 
 void SuperLamp::script(){
+    if (keyPushed('r'))
+    {
+        ifChoosed = false;
+    }
     if(ifChoosed){
-        mainText->text = string("use i j k l to move the lamp");
+        emission = Vector3(.7,.7,.7);
+        mainText->text = string("use i j k l to move the lamp , r to release");
         if(keyPushed('j')){
             if (location.z<=10.5) {
                 location.z+=0.1;
@@ -83,9 +88,13 @@ void SuperLamp::script(){
     else
     {
         if (choosedFlag)
+        {
+            emission = Vector3(-1,-1,-1);
             mainText->text = "...";
+            choosedFlag = false;
+        }
+        
     }
-    
     if (location.x>=0.9 && location.z<=-0.4 && mybulb->openFlag==true) {
         db->showFlag=true;
     }else{
